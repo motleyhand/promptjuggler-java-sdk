@@ -1,5 +1,19 @@
 plugins {
     `java-library`
+    id("com.diffplug.spotless") version "7.0.2"
+}
+
+spotless {
+    java {
+        target("src/**/*.java")
+        // The generated client carries its own style and is verified by the drift-check.
+        targetExclude("src/main/java/com/promptjuggler/client/**")
+        // Eclipse JDT formatter — self-contained (no jdk.compiler internals), so it runs on
+        // current JDKs where google-java-format / palantir-java-format break. The profile is
+        // Google's published Eclipse style (2-space, same output as google-java-format).
+        eclipse().configFile("eclipse-format.xml")
+        importOrder()
+    }
 }
 
 group = "com.promptjuggler"
