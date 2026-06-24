@@ -31,6 +31,10 @@ java {
 }
 
 dependencies {
+    // JSpecify nullness annotations on the hand-written facade. compileOnly: they live in
+    // the bytecode for downstream null-checkers but impose no transitive dependency.
+    compileOnly("org.jspecify:jspecify:1.0.0")
+
     // The generated client (com.promptjuggler.client) targets java.net.http (JDK built-in)
     // with Jackson serialization — these are its compile/runtime needs.
     api("com.fasterxml.jackson.core:jackson-databind:2.18.2")

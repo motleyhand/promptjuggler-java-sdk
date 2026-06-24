@@ -2,18 +2,20 @@ package com.promptjuggler;
 
 import java.util.Map;
 import java.util.UUID;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Optional parameters for {@link PromptJuggler#runPrompt} and {@link PromptJuggler#runWorkflow}.
+ * Every field is null when the caller leaves it unset.
  */
 public final class RunOptions {
 
-  final String priority;
-  final UUID thread;
-  final String environment;
-  final Map<String, String> envVars;
-  final Map<String, Object> metadata;
-  final String channel;
+  final @Nullable String priority;
+  final @Nullable UUID thread;
+  final @Nullable String environment;
+  final @Nullable Map<String, String> envVars;
+  final @Nullable Map<String, Object> metadata;
+  final @Nullable String channel;
 
   private RunOptions(Builder builder) {
     this.priority = builder.priority;
@@ -30,12 +32,12 @@ public final class RunOptions {
 
   public static final class Builder {
 
-    private String priority;
-    private UUID thread;
-    private String environment;
-    private Map<String, String> envVars;
-    private Map<String, Object> metadata;
-    private String channel;
+    private @Nullable String priority;
+    private @Nullable UUID thread;
+    private @Nullable String environment;
+    private @Nullable Map<String, String> envVars;
+    private @Nullable Map<String, Object> metadata;
+    private @Nullable String channel;
 
     /** Processing priority: {@code onsite}, {@code normal}, or {@code low}. */
     public Builder priority(String priority) {

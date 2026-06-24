@@ -28,6 +28,7 @@ import java.util.UUID;
 import java.util.concurrent.Callable;
 import org.apache.http.HttpEntity;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Ergonomic entry point to the PromptJuggler API. Wraps the generated client: flat method calls in,
@@ -228,7 +229,7 @@ public final class PromptJuggler {
     });
   }
 
-  private <T> T send(Callable<T> call) {
+  private <T extends @Nullable Object> T send(Callable<T> call) {
     try {
       return call.call();
     } catch (ApiException e) {
@@ -252,7 +253,7 @@ public final class PromptJuggler {
     return new ApiError(message != null ? message : e.getMessage(), e.getCode(), e);
   }
 
-  private String extractMessage(String body) {
+  private @Nullable String extractMessage(@Nullable String body) {
     if (body == null || body.isEmpty()) {
       return null;
     }
