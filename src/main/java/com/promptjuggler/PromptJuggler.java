@@ -33,6 +33,10 @@ import org.jspecify.annotations.Nullable;
 /**
  * Ergonomic entry point to the PromptJuggler API. Wraps the generated client: flat method calls in,
  * generated typed models out, with API errors translated into {@link ApiError}. Synchronous.
+ *
+ * <p>
+ * Every call that reaches the API throws the checked {@link PromptJugglerException} (either
+ * {@link ApiError} or {@link NetworkError}), so the failure surface is visible at every call site.
  */
 public final class PromptJuggler {
 
@@ -68,28 +72,29 @@ public final class PromptJuggler {
    * Fetch a prompt revision by slug and version (a revision number or a tag like
    * {@code production}).
    */
-  public PromptRevision getPrompt(String slug, String version) {
+  public PromptRevision getPrompt(String slug, String version) throws PromptJugglerException {
     return send(() -> prompts.getPromptRevision(slug, version));
   }
 
-  public PromptRevision getPrompt(String slug, int version) {
+  public PromptRevision getPrompt(String slug, int version) throws PromptJugglerException {
     return getPrompt(slug, String.valueOf(version));
   }
 
   /**
    * Trigger a prompt run (async — returns the run ID; poll {@link #getPromptRun} for the result).
    */
-  public CreatePromptRunResponse runPrompt(String slug, String version,
-      Map<String, String> inputs) {
+  public CreatePromptRunResponse runPrompt(String slug, String version, Map<String, String> inputs)
+      throws PromptJugglerException {
     return runPrompt(slug, version, inputs, RunOptions.builder().build());
   }
 
-  public CreatePromptRunResponse runPrompt(String slug, int version, Map<String, String> inputs) {
+  public CreatePromptRunResponse runPrompt(String slug, int version, Map<String, String> inputs)
+      throws PromptJugglerException {
     return runPrompt(slug, String.valueOf(version), inputs);
   }
 
   public CreatePromptRunResponse runPrompt(String slug, String version, Map<String, String> inputs,
-      RunOptions options) {
+      RunOptions options) throws PromptJugglerException {
     CreatePromptRun body = new CreatePromptRun().inputs(inputs);
     if (options.priority != null) {
       body.priority(CreatePromptRun.PriorityEnum.fromValue(options.priority));
@@ -113,16 +118,16 @@ public final class PromptJuggler {
   }
 
   public CreatePromptRunResponse runPrompt(String slug, int version, Map<String, String> inputs,
-      RunOptions options) {
+      RunOptions options) throws PromptJugglerException {
     return runPrompt(slug, String.valueOf(version), inputs, options);
   }
 
   /** Fetch a prompt run by ID. */
-  public PromptRun getPromptRun(UUID runId) {
+  public PromptRun getPromptRun(UUID runId) throws PromptJugglerException {
     return send(() -> promptRuns.getPromptRun(runId));
   }
 
-  public PromptRun getPromptRun(String runId) {
+  public PromptRun getPromptRun(String runId) throws PromptJugglerException {
     return getPromptRun(UUID.fromString(runId));
   }
 
@@ -131,17 +136,17 @@ public final class PromptJuggler {
    * result).
    */
   public CreateWorkflowRunResponse runWorkflow(String slug, String version,
-      Map<String, String> inputs) {
+      Map<String, String> inputs) throws PromptJugglerException {
     return runWorkflow(slug, version, inputs, RunOptions.builder().build());
   }
 
-  public CreateWorkflowRunResponse runWorkflow(String slug, int version,
-      Map<String, String> inputs) {
+  public CreateWorkflowRunResponse runWorkflow(String slug, int version, Map<String, String> inputs)
+      throws PromptJugglerException {
     return runWorkflow(slug, String.valueOf(version), inputs);
   }
 
   public CreateWorkflowRunResponse runWorkflow(String slug, String version,
-      Map<String, String> inputs, RunOptions options) {
+      Map<String, String> inputs, RunOptions options) throws PromptJugglerException {
     CreateWorkflowRun body = new CreateWorkflowRun().inputs(inputs);
     if (options.priority != null) {
       body.priority(CreateWorkflowRun.PriorityEnum.fromValue(options.priority));
@@ -162,47 +167,50 @@ public final class PromptJuggler {
   }
 
   public CreateWorkflowRunResponse runWorkflow(String slug, int version, Map<String, String> inputs,
-      RunOptions options) {
+      RunOptions options) throws PromptJugglerException {
     return runWorkflow(slug, String.valueOf(version), inputs, options);
   }
 
   /** Fetch a workflow run by ID. */
-  public WorkflowRun getWorkflowRun(UUID runId) {
+  public WorkflowRun getWorkflowRun(UUID runId) throws PromptJugglerException {
     return send(() -> workflowRuns.getWorkflowRun(runId));
   }
 
-  public WorkflowRun getWorkflowRun(String runId) {
+  public WorkflowRun getWorkflowRun(String runId) throws PromptJugglerException {
     return getWorkflowRun(UUID.fromString(runId));
   }
 
   /** Fetch a knowledge base by slug. */
-  public KnowledgeBaseResponse getKnowledgeBase(String slug) {
+  public KnowledgeBaseResponse getKnowledgeBase(String slug) throws PromptJugglerException {
     return send(() -> knowledgeBases.publicGetKnowledgeBase(slug));
   }
 
   /** Fetch a knowledge document by ID. */
-  public KnowledgeDocumentResponse getKnowledgeDocument(UUID documentId) {
+  public KnowledgeDocumentResponse getKnowledgeDocument(UUID documentId)
+      throws PromptJugglerException {
     return send(() -> knowledgeBases.publicGetDocument(documentId));
   }
 
-  public KnowledgeDocumentResponse getKnowledgeDocument(String documentId) {
+  public KnowledgeDocumentResponse getKnowledgeDocument(String documentId)
+      throws PromptJugglerException {
     return getKnowledgeDocument(UUID.fromString(documentId));
   }
 
   /** Delete a knowledge document by ID. */
-  public void deleteKnowledgeDocument(UUID documentId) {
+  public void deleteKnowledgeDocument(UUID documentId) throws PromptJugglerException {
     send(() -> {
       knowledgeBases.publicDeleteDocument(documentId);
       return null;
     });
   }
 
-  public void deleteKnowledgeDocument(String documentId) {
+  public void deleteKnowledgeDocument(String documentId) throws PromptJugglerException {
     deleteKnowledgeDocument(UUID.fromString(documentId));
   }
 
   /** Upload one or more documents to a knowledge base (processed asynchronously). */
-  public List<KnowledgeDocumentResponse> uploadDocuments(String slug, List<File> files) {
+  public List<KnowledgeDocumentResponse> uploadDocuments(String slug, List<File> files)
+      throws PromptJugglerException {
     // The generated client names every multipart part "files"; the server needs them
     // bracket-indexed (files[i]) to parse them as an array. Build the body and send it
     // through the client's HttpClient, reusing its base URI + bearer auth.
@@ -229,7 +237,7 @@ public final class PromptJuggler {
     });
   }
 
-  private <T extends @Nullable Object> T send(Callable<T> call) {
+  private <T extends @Nullable Object> T send(Callable<T> call) throws PromptJugglerException {
     try {
       return call.call();
     } catch (ApiException e) {

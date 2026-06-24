@@ -26,7 +26,7 @@ class RequestsTest {
   }
 
   @Test
-  void getPromptSendsGetWithBearer() {
+  void getPromptSendsGetWithBearer() throws Exception {
     try (MockServer server = new MockServer().respond(200, REVISION)) {
       server.client().getPrompt("greeting", "production");
       MockServer.Captured call = server.firstCall();
@@ -37,7 +37,7 @@ class RequestsTest {
   }
 
   @Test
-  void getPromptAcceptsIntVersion() {
+  void getPromptAcceptsIntVersion() throws Exception {
     try (MockServer server = new MockServer().respond(200, REVISION)) {
       server.client().getPrompt("greeting", 42);
       assertEquals("/api/v1/prompts/greeting/42", server.firstCall().path());
@@ -75,7 +75,7 @@ class RequestsTest {
   }
 
   @Test
-  void getPromptRunGetsByUuid() {
+  void getPromptRunGetsByUuid() throws Exception {
     String run = "{\"id\":\"" + UUID1
         + "\",\"status\":\"completed\",\"createdAt\":\"2026-01-01T00:00:00Z\"}";
     try (MockServer server = new MockServer().respond(200, run)) {
@@ -85,7 +85,7 @@ class RequestsTest {
   }
 
   @Test
-  void runWorkflowPostsToWorkflowRuns() {
+  void runWorkflowPostsToWorkflowRuns() throws Exception {
     try (MockServer server = new MockServer().respond(200, RUN_RESPONSE)) {
       server.client().runWorkflow("onboarding", "production", Map.of("email", "a@b.com"));
       MockServer.Captured call = server.firstCall();
@@ -95,7 +95,7 @@ class RequestsTest {
   }
 
   @Test
-  void getKnowledgeBaseGetsBySlug() {
+  void getKnowledgeBaseGetsBySlug() throws Exception {
     String kb = "{\"id\":\"" + UUID1 + "\",\"slug\":\"product-docs\",\"status\":\"ready\","
         + "\"documentCount\":0,\"chunkCount\":0,\"documents\":[]}";
     try (MockServer server = new MockServer().respond(200, kb)) {
@@ -105,7 +105,7 @@ class RequestsTest {
   }
 
   @Test
-  void deleteKnowledgeDocumentDeletesByUuid() {
+  void deleteKnowledgeDocumentDeletesByUuid() throws Exception {
     try (MockServer server = new MockServer().respond(204, "")) {
       server.client().deleteKnowledgeDocument(UUID1);
       MockServer.Captured call = server.firstCall();

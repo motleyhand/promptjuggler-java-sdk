@@ -50,7 +50,8 @@ if (run.getStatus() == RunStatus.COMPLETED) {
 ```
 
 Errors surface as `ApiError` (with a `statusCode()`); both it and `NetworkError` extend the
-unchecked `PromptJugglerException`. Verify incoming webhooks with `Webhooks.verifySignature()`.
+checked `PromptJugglerException`, which every API call declares `throws`. Verify incoming
+webhooks with `Webhooks.verifySignature()`.
 
 ## Documentation
 
