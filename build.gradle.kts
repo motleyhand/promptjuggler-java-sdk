@@ -1,6 +1,7 @@
 plugins {
     `java-library`
     id("com.diffplug.spotless") version "7.0.2"
+    id("com.vanniktech.maven.publish") version "0.37.0"
 }
 
 spotless {
@@ -17,7 +18,7 @@ spotless {
 }
 
 group = "com.promptjuggler"
-version = "0.0.0"
+version = "0.0.0" // stamped from the release tag by sdk-java-publish.yaml
 
 repositories {
     mavenCentral()
@@ -26,8 +27,7 @@ repositories {
 java {
     sourceCompatibility = JavaVersion.VERSION_17
     targetCompatibility = JavaVersion.VERSION_17
-    withSourcesJar()
-    withJavadocJar()
+    // sources + javadoc jars are added by the maven-publish plugin (Maven Central requires them).
 }
 
 dependencies {
@@ -51,4 +51,39 @@ tasks.test {
 tasks.withType<Javadoc> {
     // The generated client isn't written for strict doclint; don't fail the build on it.
     (options as StandardJavadocDocletOptions).addStringOption("Xdoclint:none", "-quiet")
+}
+
+mavenPublishing {
+    // Targets the Central Portal (central.sonatype.com); legacy OSSRH is retired and the
+    // SonatypeHost argument was dropped in 0.34+ — Central Portal is now the only target.
+    publishToMavenCentral()
+    // Maven Central requires GPG-signed artifacts. Keys come from the signingInMemoryKey*
+    // Gradle properties, fed via ORG_GRADLE_PROJECT_* env vars in the publish workflow.
+    signAllPublications()
+
+    coordinates("com.promptjuggler", "promptjuggler-java", version.toString())
+
+    pom {
+        name.set("PromptJuggler Java SDK")
+        description.set("Official Java SDK for the PromptJuggler API.")
+        url.set("https://github.com/motleyhand/promptjuggler-java-sdk")
+        licenses {
+            license {
+                name.set("MIT License")
+                url.set("https://opensource.org/licenses/MIT")
+            }
+        }
+        developers {
+            developer {
+                id.set("motleyhand")
+                name.set("PromptJuggler")
+                url.set("https://promptjuggler.com")
+            }
+        }
+        scm {
+            url.set("https://github.com/motleyhand/promptjuggler-java-sdk")
+            connection.set("scm:git:git://github.com/motleyhand/promptjuggler-java-sdk.git")
+            developerConnection.set("scm:git:ssh://git@github.com/motleyhand/promptjuggler-java-sdk.git")
+        }
+    }
 }
