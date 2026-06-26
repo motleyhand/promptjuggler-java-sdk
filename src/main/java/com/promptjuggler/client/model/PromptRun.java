@@ -24,7 +24,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonValue;
+import com.promptjuggler.client.model.RunCost;
 import com.promptjuggler.client.model.RunStatus;
+import com.promptjuggler.client.model.TokenUsage;
 import java.time.OffsetDateTime;
 import java.util.Arrays;
 import java.util.UUID;
@@ -45,7 +47,9 @@ import com.promptjuggler.client.ApiClient;
   PromptRun.JSON_PROPERTY_CREATED_AT,
   PromptRun.JSON_PROPERTY_FINISHED_AT,
   PromptRun.JSON_PROPERTY_OUTPUT,
-  PromptRun.JSON_PROPERTY_ERROR
+  PromptRun.JSON_PROPERTY_ERROR,
+  PromptRun.JSON_PROPERTY_TOKEN_USAGE,
+  PromptRun.JSON_PROPERTY_COST
 })
 @jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.23.0")
 public class PromptRun {
@@ -69,6 +73,12 @@ public class PromptRun {
 
   public static final String JSON_PROPERTY_ERROR = "error";
   private JsonNullable<String> error = JsonNullable.<String>undefined();
+
+  public static final String JSON_PROPERTY_TOKEN_USAGE = "tokenUsage";
+  private JsonNullable<TokenUsage> tokenUsage = JsonNullable.<TokenUsage>undefined();
+
+  public static final String JSON_PROPERTY_COST = "cost";
+  private JsonNullable<RunCost> cost = JsonNullable.<RunCost>undefined();
 
   public PromptRun() { 
   }
@@ -241,6 +251,70 @@ public class PromptRun {
   }
 
 
+  public PromptRun tokenUsage(@jakarta.annotation.Nullable TokenUsage tokenUsage) {
+    this.tokenUsage = JsonNullable.<TokenUsage>of(tokenUsage);
+    return this;
+  }
+
+  /**
+   * Token usage for the successful run. Null while pending or when the run failed.
+   * @return tokenUsage
+   */
+  @jakarta.annotation.Nullable
+  @JsonIgnore
+  public TokenUsage getTokenUsage() {
+        return tokenUsage.orElse(null);
+  }
+
+  @JsonProperty(value = JSON_PROPERTY_TOKEN_USAGE, required = false)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+
+  public JsonNullable<TokenUsage> getTokenUsage_JsonNullable() {
+    return tokenUsage;
+  }
+  
+  @JsonProperty(JSON_PROPERTY_TOKEN_USAGE)
+  public void setTokenUsage_JsonNullable(JsonNullable<TokenUsage> tokenUsage) {
+    this.tokenUsage = tokenUsage;
+  }
+
+  public void setTokenUsage(@jakarta.annotation.Nullable TokenUsage tokenUsage) {
+    this.tokenUsage = JsonNullable.<TokenUsage>of(tokenUsage);
+  }
+
+
+  public PromptRun cost(@jakarta.annotation.Nullable RunCost cost) {
+    this.cost = JsonNullable.<RunCost>of(cost);
+    return this;
+  }
+
+  /**
+   * Cost breakdown for the run. Null while pending.
+   * @return cost
+   */
+  @jakarta.annotation.Nullable
+  @JsonIgnore
+  public RunCost getCost() {
+        return cost.orElse(null);
+  }
+
+  @JsonProperty(value = JSON_PROPERTY_COST, required = false)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+
+  public JsonNullable<RunCost> getCost_JsonNullable() {
+    return cost;
+  }
+  
+  @JsonProperty(JSON_PROPERTY_COST)
+  public void setCost_JsonNullable(JsonNullable<RunCost> cost) {
+    this.cost = cost;
+  }
+
+  public void setCost(@jakarta.annotation.Nullable RunCost cost) {
+    this.cost = JsonNullable.<RunCost>of(cost);
+  }
+
+
   /**
    * Return true if this PromptRun object is equal to o.
    */
@@ -258,7 +332,9 @@ public class PromptRun {
         Objects.equals(this.createdAt, promptRun.createdAt) &&
         equalsNullable(this.finishedAt, promptRun.finishedAt) &&
         equalsNullable(this.output, promptRun.output) &&
-        equalsNullable(this.error, promptRun.error);
+        equalsNullable(this.error, promptRun.error) &&
+        equalsNullable(this.tokenUsage, promptRun.tokenUsage) &&
+        equalsNullable(this.cost, promptRun.cost);
   }
 
   private static <T> boolean equalsNullable(JsonNullable<T> a, JsonNullable<T> b) {
@@ -267,7 +343,7 @@ public class PromptRun {
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, status, createdAt, hashCodeNullable(finishedAt), hashCodeNullable(output), hashCodeNullable(error));
+    return Objects.hash(id, status, createdAt, hashCodeNullable(finishedAt), hashCodeNullable(output), hashCodeNullable(error), hashCodeNullable(tokenUsage), hashCodeNullable(cost));
   }
 
   private static <T> int hashCodeNullable(JsonNullable<T> a) {
@@ -287,6 +363,8 @@ public class PromptRun {
     sb.append("    finishedAt: ").append(toIndentedString(finishedAt)).append("\n");
     sb.append("    output: ").append(toIndentedString(output)).append("\n");
     sb.append("    error: ").append(toIndentedString(error)).append("\n");
+    sb.append("    tokenUsage: ").append(toIndentedString(tokenUsage)).append("\n");
+    sb.append("    cost: ").append(toIndentedString(cost)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -359,6 +437,16 @@ public class PromptRun {
     // add `error` to the URL query string
     if (getError() != null) {
       joiner.add(String.format(java.util.Locale.ROOT, "%serror%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getError()))));
+    }
+
+    // add `tokenUsage` to the URL query string
+    if (getTokenUsage() != null) {
+      joiner.add(getTokenUsage().toUrlQueryString(prefix + "tokenUsage" + suffix));
+    }
+
+    // add `cost` to the URL query string
+    if (getCost() != null) {
+      joiner.add(getCost().toUrlQueryString(prefix + "cost" + suffix));
     }
 
     return joiner.toString();

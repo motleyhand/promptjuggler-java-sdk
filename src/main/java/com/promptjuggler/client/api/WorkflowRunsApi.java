@@ -315,7 +315,7 @@ public class WorkflowRunsApi {
 
   /**
    * Get a workflow run by ID
-   * Retrieves the current state of a workflow run, including status, outputs, and errors. Poll this endpoint after receiving a webhook notification, or use it to check the status of a run in progress.
+   * Retrieves the current state of a workflow run, including status, outputs, aggregated token usage, cost, and errors. Poll this endpoint after receiving a webhook notification, or use it to check the status of a run in progress.
    * @param id Workflow run ID (required)
    * @return WorkflowRun
    * @throws ApiException if fails to make API call
@@ -326,7 +326,7 @@ public class WorkflowRunsApi {
 
   /**
    * Get a workflow run by ID
-   * Retrieves the current state of a workflow run, including status, outputs, and errors. Poll this endpoint after receiving a webhook notification, or use it to check the status of a run in progress.
+   * Retrieves the current state of a workflow run, including status, outputs, aggregated token usage, cost, and errors. Poll this endpoint after receiving a webhook notification, or use it to check the status of a run in progress.
    * @param id Workflow run ID (required)
    * @param headers Optional headers to include in the request
    * @return WorkflowRun
@@ -339,7 +339,7 @@ public class WorkflowRunsApi {
 
   /**
    * Get a workflow run by ID
-   * Retrieves the current state of a workflow run, including status, outputs, and errors. Poll this endpoint after receiving a webhook notification, or use it to check the status of a run in progress.
+   * Retrieves the current state of a workflow run, including status, outputs, aggregated token usage, cost, and errors. Poll this endpoint after receiving a webhook notification, or use it to check the status of a run in progress.
    * @param id Workflow run ID (required)
    * @return ApiResponse&lt;WorkflowRun&gt;
    * @throws ApiException if fails to make API call
@@ -350,7 +350,7 @@ public class WorkflowRunsApi {
 
   /**
    * Get a workflow run by ID
-   * Retrieves the current state of a workflow run, including status, outputs, and errors. Poll this endpoint after receiving a webhook notification, or use it to check the status of a run in progress.
+   * Retrieves the current state of a workflow run, including status, outputs, aggregated token usage, cost, and errors. Poll this endpoint after receiving a webhook notification, or use it to check the status of a run in progress.
    * @param id Workflow run ID (required)
    * @param headers Optional headers to include in the request
    * @return ApiResponse&lt;WorkflowRun&gt;
