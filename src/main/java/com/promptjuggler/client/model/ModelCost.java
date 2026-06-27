@@ -25,10 +25,6 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonValue;
 import java.util.Arrays;
-import org.openapitools.jackson.nullable.JsonNullable;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.openapitools.jackson.nullable.JsonNullable;
-import java.util.NoSuchElementException;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 
@@ -50,15 +46,16 @@ public class ModelCost {
   private Float input;
 
   public static final String JSON_PROPERTY_CACHED_INPUT = "cachedInput";
-  private JsonNullable<Float> cachedInput = JsonNullable.<Float>undefined();
+  @jakarta.annotation.Nonnull
+  private Float cachedInput;
 
   public static final String JSON_PROPERTY_OUTPUT = "output";
   @jakarta.annotation.Nonnull
   private Float output;
 
   public static final String JSON_PROPERTY_WEB_SEARCH = "webSearch";
-  @jakarta.annotation.Nullable
-  private Float webSearch = 0f;
+  @jakarta.annotation.Nonnull
+  private Float webSearch;
 
   public static final String JSON_PROPERTY_TOTAL = "total";
   @jakarta.annotation.Nonnull
@@ -91,8 +88,8 @@ public class ModelCost {
   }
 
 
-  public ModelCost cachedInput(@jakarta.annotation.Nullable Float cachedInput) {
-    this.cachedInput = JsonNullable.<Float>of(cachedInput);
+  public ModelCost cachedInput(@jakarta.annotation.Nonnull Float cachedInput) {
+    this.cachedInput = cachedInput;
     return this;
   }
 
@@ -100,26 +97,18 @@ public class ModelCost {
    * Get cachedInput
    * @return cachedInput
    */
-  @jakarta.annotation.Nullable
-  @JsonIgnore
+  @jakarta.annotation.Nonnull
+  @JsonProperty(value = JSON_PROPERTY_CACHED_INPUT, required = true)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public Float getCachedInput() {
-        return cachedInput.orElse(null);
-  }
-
-  @JsonProperty(value = JSON_PROPERTY_CACHED_INPUT, required = false)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-
-  public JsonNullable<Float> getCachedInput_JsonNullable() {
     return cachedInput;
   }
-  
-  @JsonProperty(JSON_PROPERTY_CACHED_INPUT)
-  public void setCachedInput_JsonNullable(JsonNullable<Float> cachedInput) {
-    this.cachedInput = cachedInput;
-  }
 
-  public void setCachedInput(@jakarta.annotation.Nullable Float cachedInput) {
-    this.cachedInput = JsonNullable.<Float>of(cachedInput);
+
+  @JsonProperty(value = JSON_PROPERTY_CACHED_INPUT, required = true)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public void setCachedInput(@jakarta.annotation.Nonnull Float cachedInput) {
+    this.cachedInput = cachedInput;
   }
 
 
@@ -147,7 +136,7 @@ public class ModelCost {
   }
 
 
-  public ModelCost webSearch(@jakarta.annotation.Nullable Float webSearch) {
+  public ModelCost webSearch(@jakarta.annotation.Nonnull Float webSearch) {
     this.webSearch = webSearch;
     return this;
   }
@@ -156,17 +145,17 @@ public class ModelCost {
    * Get webSearch
    * @return webSearch
    */
-  @jakarta.annotation.Nullable
-  @JsonProperty(value = JSON_PROPERTY_WEB_SEARCH, required = false)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @jakarta.annotation.Nonnull
+  @JsonProperty(value = JSON_PROPERTY_WEB_SEARCH, required = true)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public Float getWebSearch() {
     return webSearch;
   }
 
 
-  @JsonProperty(value = JSON_PROPERTY_WEB_SEARCH, required = false)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setWebSearch(@jakarta.annotation.Nullable Float webSearch) {
+  @JsonProperty(value = JSON_PROPERTY_WEB_SEARCH, required = true)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public void setWebSearch(@jakarta.annotation.Nonnull Float webSearch) {
     this.webSearch = webSearch;
   }
 
@@ -208,26 +197,15 @@ public class ModelCost {
     }
     ModelCost modelCost = (ModelCost) o;
     return Objects.equals(this.input, modelCost.input) &&
-        equalsNullable(this.cachedInput, modelCost.cachedInput) &&
+        Objects.equals(this.cachedInput, modelCost.cachedInput) &&
         Objects.equals(this.output, modelCost.output) &&
         Objects.equals(this.webSearch, modelCost.webSearch) &&
         Objects.equals(this.total, modelCost.total);
   }
 
-  private static <T> boolean equalsNullable(JsonNullable<T> a, JsonNullable<T> b) {
-    return a == b || (a != null && b != null && a.isPresent() && b.isPresent() && Objects.deepEquals(a.get(), b.get()));
-  }
-
   @Override
   public int hashCode() {
-    return Objects.hash(input, hashCodeNullable(cachedInput), output, webSearch, total);
-  }
-
-  private static <T> int hashCodeNullable(JsonNullable<T> a) {
-    if (a == null) {
-      return 1;
-    }
-    return a.isPresent() ? Arrays.deepHashCode(new Object[]{a.get()}) : 31;
+    return Objects.hash(input, cachedInput, output, webSearch, total);
   }
 
   @Override
