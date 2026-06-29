@@ -18,7 +18,7 @@ spotless {
 }
 
 group = "com.promptjuggler"
-version = "0.0.0" // stamped from the release tag by sdk-java-publish.yaml
+version = "1.0.4"
 
 repositories {
     mavenCentral()
