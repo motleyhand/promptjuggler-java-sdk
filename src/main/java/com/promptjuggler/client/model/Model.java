@@ -52,25 +52,23 @@ public enum Model {
   
   GPT_4_1_MINI("gpt-4.1-mini"),
   
-  O1_MINI("o1-mini"),
-  
   GPT_4O("gpt-4o"),
   
   GPT_4O_MINI("gpt-4o-mini"),
   
   GEMINI_3_1_PRO_PREVIEW("gemini-3.1-pro-preview"),
   
+  GEMINI_3_5_FLASH("gemini-3.5-flash"),
+  
   GEMINI_3_FLASH_PREVIEW("gemini-3-flash-preview"),
+  
+  GEMINI_3_1_FLASH_LITE("gemini-3.1-flash-lite"),
   
   GEMINI_2_5_PRO("gemini-2.5-pro"),
   
   GEMINI_2_5_FLASH("gemini-2.5-flash"),
   
   GEMINI_2_5_FLASH_LITE("gemini-2.5-flash-lite"),
-  
-  GEMINI_2_0_FLASH("gemini-2.0-flash"),
-  
-  GEMINI_2_0_FLASH_LITE("gemini-2.0-flash-lite"),
   
   CLAUDE_OPUS_4_8("claude-opus-4-8"),
   
