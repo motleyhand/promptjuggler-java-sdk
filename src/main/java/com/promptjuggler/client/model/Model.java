@@ -70,6 +70,8 @@ public enum Model {
   
   GEMINI_2_5_FLASH_LITE("gemini-2.5-flash-lite"),
   
+  CLAUDE_FABLE_5("claude-fable-5"),
+  
   CLAUDE_OPUS_4_8("claude-opus-4-8"),
   
   CLAUDE_OPUS_4_7("claude-opus-4-7"),
@@ -77,6 +79,8 @@ public enum Model {
   CLAUDE_OPUS_4_6("claude-opus-4-6"),
   
   CLAUDE_OPUS_4_5("claude-opus-4-5"),
+  
+  CLAUDE_SONNET_5("claude-sonnet-5"),
   
   CLAUDE_SONNET_4_6("claude-sonnet-4-6"),
   
