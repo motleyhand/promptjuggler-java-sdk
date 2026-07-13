@@ -30,6 +30,12 @@ import com.fasterxml.jackson.annotation.JsonValue;
  */
 public enum Model {
   
+  GPT_5_6_SOL("gpt-5.6-sol"),
+  
+  GPT_5_6_TERRA("gpt-5.6-terra"),
+  
+  GPT_5_6_LUNA("gpt-5.6-luna"),
+  
   GPT_5_5("gpt-5.5"),
   
   GPT_5_5_PRO("gpt-5.5-pro"),
