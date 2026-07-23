@@ -107,6 +107,22 @@ class RequestsTest {
   }
 
   @Test
+  void createStreamTokenPostsToThread() throws Exception {
+    String url = "https://stream.promptjuggler.com/stream/" + UUID1;
+    String token =
+        "{\"token\":\"jwt-value\",\"expiresAt\":\"2026-01-01T00:00:00Z\",\"url\":\"" + url + "\"}";
+    try (MockServer server = new MockServer().respond(200, token)) {
+      var response = server.client().createStreamToken(UUID1);
+      MockServer.Captured call = server.firstCall();
+      assertEquals("POST", call.method());
+      assertEquals("/api/v1/threads/" + UUID1 + "/stream-token", call.path());
+      assertEquals("Bearer test-key", call.headers().getFirst("Authorization"));
+      assertEquals("jwt-value", response.getToken());
+      assertEquals(url, response.getUrl());
+    }
+  }
+
+  @Test
   void versionRefDeserializesNumericIdOrTag() throws Exception {
     // A prompt's tools reference a revision by number or tag (VersionRef.idOrTag). With a
     // numeric ref, the oneOf wrapper double-matched (Integer + coerced String) and threw,

@@ -6,6 +6,7 @@ import com.promptjuggler.client.ApiException;
 import com.promptjuggler.client.api.KnowledgeBasesApi;
 import com.promptjuggler.client.api.PromptRunsApi;
 import com.promptjuggler.client.api.PromptsApi;
+import com.promptjuggler.client.api.StreamingApi;
 import com.promptjuggler.client.api.WorkflowRunsApi;
 import com.promptjuggler.client.model.CreatePromptRun;
 import com.promptjuggler.client.model.CreatePromptRunResponse;
@@ -15,6 +16,7 @@ import com.promptjuggler.client.model.KnowledgeBaseResponse;
 import com.promptjuggler.client.model.KnowledgeDocumentResponse;
 import com.promptjuggler.client.model.PromptRevision;
 import com.promptjuggler.client.model.PromptRun;
+import com.promptjuggler.client.model.StreamTokenResponse;
 import com.promptjuggler.client.model.WorkflowRun;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -49,6 +51,7 @@ public final class PromptJuggler {
   private final PromptRunsApi promptRuns;
   private final WorkflowRunsApi workflowRuns;
   private final KnowledgeBasesApi knowledgeBases;
+  private final StreamingApi streaming;
 
   public PromptJuggler(String apiKey) {
     this(apiKey, DEFAULT_BASE_URL);
@@ -66,6 +69,7 @@ public final class PromptJuggler {
     this.promptRuns = new PromptRunsApi(client);
     this.workflowRuns = new WorkflowRunsApi(client);
     this.knowledgeBases = new KnowledgeBasesApi(client);
+    this.streaming = new StreamingApi(client);
   }
 
   /**
@@ -178,6 +182,22 @@ public final class PromptJuggler {
 
   public WorkflowRun getWorkflowRun(String runId) throws PromptJugglerException {
     return getWorkflowRun(UUID.fromString(runId));
+  }
+
+  /**
+   * Mint a short-lived, thread-scoped credential for the streaming endpoint. Call this from your
+   * server and hand the result to the browser — the API key must never reach it. The response
+   * carries the fully-resolved SSE URL alongside the token, so clients need no host configuration.
+   *
+   * <p>
+   * Connect before triggering a run: tokens emitted while nobody is subscribed are not replayed.
+   */
+  public StreamTokenResponse createStreamToken(UUID thread) throws PromptJugglerException {
+    return send(() -> streaming.createStreamToken(thread));
+  }
+
+  public StreamTokenResponse createStreamToken(String thread) throws PromptJugglerException {
+    return createStreamToken(UUID.fromString(thread));
   }
 
   /** Fetch a knowledge base by slug. */
