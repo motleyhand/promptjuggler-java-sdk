@@ -27,6 +27,7 @@ import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonValue;
+import com.promptjuggler.client.model.Emit;
 import com.promptjuggler.client.model.HttpCall;
 import com.promptjuggler.client.model.HttpHeader;
 import com.promptjuggler.client.model.KnowledgeSearch;
@@ -104,6 +105,32 @@ public class Tool extends AbstractOpenApiSchema {
             boolean typeCoercion = ctxt.isEnabled(MapperFeature.ALLOW_COERCION_OF_SCALARS);
             int match = 0;
             JsonToken token = tree.traverse(jp.getCodec()).nextToken();
+            // deserialize Emit
+            try {
+                boolean attemptParsing = true;
+                // ensure that we respect type coercion as set on the client ObjectMapper
+                if (Emit.class.equals(Integer.class) || Emit.class.equals(Long.class) || Emit.class.equals(Float.class) || Emit.class.equals(Double.class) || Emit.class.equals(Boolean.class) || Emit.class.equals(String.class)) {
+                    attemptParsing = typeCoercion;
+                    if (!attemptParsing) {
+                        attemptParsing |= ((Emit.class.equals(Integer.class) || Emit.class.equals(Long.class)) && token == JsonToken.VALUE_NUMBER_INT);
+                        attemptParsing |= ((Emit.class.equals(Float.class) || Emit.class.equals(Double.class)) && token == JsonToken.VALUE_NUMBER_FLOAT);
+                        attemptParsing |= (Emit.class.equals(Boolean.class) && (token == JsonToken.VALUE_FALSE || token == JsonToken.VALUE_TRUE));
+                        attemptParsing |= (Emit.class.equals(String.class) && token == JsonToken.VALUE_STRING);
+                    }
+                }
+                if (attemptParsing) {
+                    deserialized = tree.traverse(jp.getCodec()).readValueAs(Emit.class);
+                    // TODO: there is no validation against JSON schema constraints
+                    // (min, max, enum, pattern...), this does not perform a strict JSON
+                    // validation, which means the 'match' count may be higher than it should be.
+                    match++;
+                    log.log(Level.FINER, "Input data matches schema 'Emit'");
+                }
+            } catch (Exception e) {
+                // deserialization failed, continue
+                log.log(Level.FINER, "Input data does not match schema 'Emit'", e);
+            }
+
             // deserialize HttpCall
             try {
                 boolean attemptParsing = true;
@@ -310,6 +337,11 @@ public class Tool extends AbstractOpenApiSchema {
         super("oneOf", Boolean.FALSE);
     }
 
+    public Tool(Emit o) {
+        super("oneOf", Boolean.FALSE);
+        setActualInstance(o);
+    }
+
     public Tool(HttpCall o) {
         super("oneOf", Boolean.FALSE);
         setActualInstance(o);
@@ -346,6 +378,7 @@ public class Tool extends AbstractOpenApiSchema {
     }
 
     static {
+        schemas.put("Emit", Emit.class);
         schemas.put("HttpCall", HttpCall.class);
         schemas.put("KnowledgeSearch", KnowledgeSearch.class);
         schemas.put("Mcp", Mcp.class);
@@ -356,6 +389,7 @@ public class Tool extends AbstractOpenApiSchema {
         JSON.registerDescendants(Tool.class, Collections.unmodifiableMap(schemas));
         // Initialize and register the discriminator mappings.
         Map<String, Class<?>> mappings = new HashMap<String, Class<?>>();
+        mappings.put("emit", Emit.class);
         mappings.put("http", HttpCall.class);
         mappings.put("knowledge_search", KnowledgeSearch.class);
         mappings.put("mcp", Mcp.class);
@@ -375,13 +409,18 @@ public class Tool extends AbstractOpenApiSchema {
     /**
      * Set the instance that matches the oneOf child schema, check
      * the instance parameter is valid against the oneOf child schemas:
-     * HttpCall, KnowledgeSearch, Mcp, PromptCall, ScriptCall, WebSearch, WorkflowCall
+     * Emit, HttpCall, KnowledgeSearch, Mcp, PromptCall, ScriptCall, WebSearch, WorkflowCall
      *
      * It could be an instance of the 'oneOf' schemas.
      * The oneOf child schemas may themselves be a composed schema (allOf, anyOf, oneOf).
      */
     @Override
     public void setActualInstance(Object instance) {
+        if (JSON.isInstanceOf(Emit.class, instance, new HashSet<Class<?>>())) {
+            super.setActualInstance(instance);
+            return;
+        }
+
         if (JSON.isInstanceOf(HttpCall.class, instance, new HashSet<Class<?>>())) {
             super.setActualInstance(instance);
             return;
@@ -417,18 +456,29 @@ public class Tool extends AbstractOpenApiSchema {
             return;
         }
 
-        throw new RuntimeException("Invalid instance type. Must be HttpCall, KnowledgeSearch, Mcp, PromptCall, ScriptCall, WebSearch, WorkflowCall");
+        throw new RuntimeException("Invalid instance type. Must be Emit, HttpCall, KnowledgeSearch, Mcp, PromptCall, ScriptCall, WebSearch, WorkflowCall");
     }
 
     /**
      * Get the actual instance, which can be the following:
-     * HttpCall, KnowledgeSearch, Mcp, PromptCall, ScriptCall, WebSearch, WorkflowCall
+     * Emit, HttpCall, KnowledgeSearch, Mcp, PromptCall, ScriptCall, WebSearch, WorkflowCall
      *
-     * @return The actual instance (HttpCall, KnowledgeSearch, Mcp, PromptCall, ScriptCall, WebSearch, WorkflowCall)
+     * @return The actual instance (Emit, HttpCall, KnowledgeSearch, Mcp, PromptCall, ScriptCall, WebSearch, WorkflowCall)
      */
     @Override
     public Object getActualInstance() {
         return super.getActualInstance();
+    }
+
+    /**
+     * Get the actual instance of `Emit`. If the actual instance is not `Emit`,
+     * the ClassCastException will be thrown.
+     *
+     * @return The actual instance of `Emit`
+     * @throws ClassCastException if the instance is not `Emit`
+     */
+    public Emit getEmit() throws ClassCastException {
+        return (Emit)super.getActualInstance();
     }
 
     /**
@@ -581,6 +631,12 @@ public class Tool extends AbstractOpenApiSchema {
     if (getActualInstance() instanceof KnowledgeSearch) {
         if (getActualInstance() != null) {
           joiner.add(((KnowledgeSearch)getActualInstance()).toUrlQueryString(prefix + "one_of_6" + suffix));
+        }
+        return joiner.toString();
+    }
+    if (getActualInstance() instanceof Emit) {
+        if (getActualInstance() != null) {
+          joiner.add(((Emit)getActualInstance()).toUrlQueryString(prefix + "one_of_7" + suffix));
         }
         return joiner.toString();
     }

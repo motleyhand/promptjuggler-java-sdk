@@ -24,11 +24,14 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonValue;
+import com.promptjuggler.client.model.EmittedItem;
 import com.promptjuggler.client.model.RunCost;
 import com.promptjuggler.client.model.RunStatus;
 import com.promptjuggler.client.model.TokenUsage;
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
 import org.openapitools.jackson.nullable.JsonNullable;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -47,6 +50,7 @@ import com.promptjuggler.client.ApiClient;
   PromptRun.JSON_PROPERTY_CREATED_AT,
   PromptRun.JSON_PROPERTY_FINISHED_AT,
   PromptRun.JSON_PROPERTY_OUTPUT,
+  PromptRun.JSON_PROPERTY_EMITTED,
   PromptRun.JSON_PROPERTY_ERROR,
   PromptRun.JSON_PROPERTY_TOKEN_USAGE,
   PromptRun.JSON_PROPERTY_COST
@@ -70,6 +74,10 @@ public class PromptRun {
 
   public static final String JSON_PROPERTY_OUTPUT = "output";
   private JsonNullable<String> output = JsonNullable.<String>undefined();
+
+  public static final String JSON_PROPERTY_EMITTED = "emitted";
+  @jakarta.annotation.Nonnull
+  private List<EmittedItem> emitted = new ArrayList<>();
 
   public static final String JSON_PROPERTY_ERROR = "error";
   private JsonNullable<String> error = JsonNullable.<String>undefined();
@@ -219,6 +227,38 @@ public class PromptRun {
   }
 
 
+  public PromptRun emitted(@jakarta.annotation.Nonnull List<EmittedItem> emitted) {
+    this.emitted = emitted;
+    return this;
+  }
+
+  public PromptRun addEmittedItem(EmittedItem emittedItem) {
+    if (this.emitted == null) {
+      this.emitted = new ArrayList<>();
+    }
+    this.emitted.add(emittedItem);
+    return this;
+  }
+
+  /**
+   * Payloads produced by emit tools during this run, in call order. Empty until the run completes.
+   * @return emitted
+   */
+  @jakarta.annotation.Nonnull
+  @JsonProperty(value = JSON_PROPERTY_EMITTED, required = true)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public List<EmittedItem> getEmitted() {
+    return emitted;
+  }
+
+
+  @JsonProperty(value = JSON_PROPERTY_EMITTED, required = true)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public void setEmitted(@jakarta.annotation.Nonnull List<EmittedItem> emitted) {
+    this.emitted = emitted;
+  }
+
+
   public PromptRun error(@jakarta.annotation.Nullable String error) {
     this.error = JsonNullable.<String>of(error);
     return this;
@@ -332,6 +372,7 @@ public class PromptRun {
         Objects.equals(this.createdAt, promptRun.createdAt) &&
         equalsNullable(this.finishedAt, promptRun.finishedAt) &&
         equalsNullable(this.output, promptRun.output) &&
+        Objects.equals(this.emitted, promptRun.emitted) &&
         equalsNullable(this.error, promptRun.error) &&
         equalsNullable(this.tokenUsage, promptRun.tokenUsage) &&
         equalsNullable(this.cost, promptRun.cost);
@@ -343,7 +384,7 @@ public class PromptRun {
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, status, createdAt, hashCodeNullable(finishedAt), hashCodeNullable(output), hashCodeNullable(error), hashCodeNullable(tokenUsage), hashCodeNullable(cost));
+    return Objects.hash(id, status, createdAt, hashCodeNullable(finishedAt), hashCodeNullable(output), emitted, hashCodeNullable(error), hashCodeNullable(tokenUsage), hashCodeNullable(cost));
   }
 
   private static <T> int hashCodeNullable(JsonNullable<T> a) {
@@ -362,6 +403,7 @@ public class PromptRun {
     sb.append("    createdAt: ").append(toIndentedString(createdAt)).append("\n");
     sb.append("    finishedAt: ").append(toIndentedString(finishedAt)).append("\n");
     sb.append("    output: ").append(toIndentedString(output)).append("\n");
+    sb.append("    emitted: ").append(toIndentedString(emitted)).append("\n");
     sb.append("    error: ").append(toIndentedString(error)).append("\n");
     sb.append("    tokenUsage: ").append(toIndentedString(tokenUsage)).append("\n");
     sb.append("    cost: ").append(toIndentedString(cost)).append("\n");
@@ -432,6 +474,16 @@ public class PromptRun {
     // add `output` to the URL query string
     if (getOutput() != null) {
       joiner.add(String.format(java.util.Locale.ROOT, "%soutput%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getOutput()))));
+    }
+
+    // add `emitted` to the URL query string
+    if (getEmitted() != null) {
+      for (int i = 0; i < getEmitted().size(); i++) {
+        if (getEmitted().get(i) != null) {
+          joiner.add(getEmitted().get(i).toUrlQueryString(String.format(java.util.Locale.ROOT, "%semitted%s%s", prefix, suffix,
+          "".equals(suffix) ? "" : String.format(java.util.Locale.ROOT, "%s%d%s", containerPrefix, i, containerSuffix))));
+        }
+      }
     }
 
     // add `error` to the URL query string
