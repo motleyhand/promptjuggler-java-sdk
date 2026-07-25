@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.nio.charset.StandardCharsets;
+import java.time.Instant;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import org.junit.jupiter.api.Test;
@@ -52,6 +53,15 @@ class WebhooksTest {
   void acceptsTimestampAtEdgeOfTolerance() throws Exception {
     assertTrue(
         Webhooks.verifySignature(PAYLOAD, header(PAYLOAD, SECRET, TS), SECRET, 300, TS + 300));
+  }
+
+  @Test
+  void acceptsInstantNow() throws Exception {
+    // The Instant overload truncates to epoch seconds and delegates to the long-based core.
+    assertTrue(Webhooks.verifySignature(PAYLOAD, header(PAYLOAD, SECRET, TS), SECRET, 300,
+        Instant.ofEpochSecond(TS)));
+    assertFalse(Webhooks.verifySignature(PAYLOAD, header(PAYLOAD, SECRET, TS), SECRET, 300,
+        Instant.ofEpochSecond(TS + 301)));
   }
 
   @Test

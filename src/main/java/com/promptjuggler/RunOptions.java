@@ -6,7 +6,8 @@ import org.jspecify.annotations.Nullable;
 
 /**
  * Optional parameters for {@link PromptJuggler#runPrompt} and {@link PromptJuggler#runWorkflow}.
- * Every field is null when the caller leaves it unset.
+ * Every field is null when the caller leaves it unset. Passing {@code null} to any setter is
+ * equivalent to leaving that field unset, so callers can forward a nullable value without guarding.
  */
 public final class RunOptions {
 
@@ -40,39 +41,39 @@ public final class RunOptions {
     private @Nullable String channel;
 
     /** Processing priority: {@code onsite}, {@code normal}, or {@code low}. */
-    public Builder priority(String priority) {
+    public Builder priority(@Nullable String priority) {
       this.priority = priority;
       return this;
     }
 
-    public Builder thread(UUID thread) {
+    public Builder thread(@Nullable UUID thread) {
       this.thread = thread;
       return this;
     }
 
-    public Builder thread(String thread) {
-      this.thread = UUID.fromString(thread);
+    public Builder thread(@Nullable String thread) {
+      this.thread = thread != null ? UUID.fromString(thread) : null;
       return this;
     }
 
-    public Builder environment(String environment) {
+    public Builder environment(@Nullable String environment) {
       this.environment = environment;
       return this;
     }
 
-    public Builder envVars(Map<String, String> envVars) {
+    public Builder envVars(@Nullable Map<String, String> envVars) {
       this.envVars = envVars;
       return this;
     }
 
     /** Metadata values are {@code String} or {@code List<String>}. */
-    public Builder metadata(Map<String, Object> metadata) {
+    public Builder metadata(@Nullable Map<String, Object> metadata) {
       this.metadata = metadata;
       return this;
     }
 
     /** Memory channel (prompt runs only; ignored by {@code runWorkflow}). */
-    public Builder channel(String channel) {
+    public Builder channel(@Nullable String channel) {
       this.channel = channel;
       return this;
     }

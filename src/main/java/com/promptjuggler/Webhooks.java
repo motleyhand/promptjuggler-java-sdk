@@ -2,6 +2,7 @@ package com.promptjuggler;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
+import java.time.Instant;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import org.jspecify.annotations.Nullable;
@@ -67,6 +68,16 @@ public final class Webhooks {
     String expected = hmacSha256Hex(secret, timestamp + "." + payload);
     return MessageDigest.isEqual(expected.getBytes(StandardCharsets.UTF_8),
         signature.getBytes(StandardCharsets.UTF_8));
+  }
+
+  /**
+   * Verifies a webhook signature against an explicit tolerance, taking the reference time as an
+   * {@link Instant} rather than epoch seconds. The signature timestamp is second-granular, so
+   * {@code now} is truncated to whole seconds.
+   */
+  public static boolean verifySignature(String payload, @Nullable String signatureHeader,
+      String secret, long tolerance, Instant now) {
+    return verifySignature(payload, signatureHeader, secret, tolerance, now.getEpochSecond());
   }
 
   private static String hmacSha256Hex(String secret, String data) {

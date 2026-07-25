@@ -1,6 +1,7 @@
 package com.promptjuggler;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -74,6 +75,21 @@ class RequestsTest {
       assertEquals("a", b.get("metadata").get("tags").get(0).asText());
       assertEquals(2, b.get("metadata").get("tags").size());
     }
+  }
+
+  @Test
+  void builderTreatsNullAsUnset() {
+    // A nullable value can be forwarded to any setter without a guard; null means "unset".
+    // thread(String) also exercises the null guard around UUID.fromString.
+    RunOptions options = RunOptions.builder().priority(null).thread((String) null).environment(null)
+        .envVars(null).metadata(null).channel(null).build();
+
+    assertNull(options.priority);
+    assertNull(options.thread);
+    assertNull(options.environment);
+    assertNull(options.envVars);
+    assertNull(options.metadata);
+    assertNull(options.channel);
   }
 
   @Test
