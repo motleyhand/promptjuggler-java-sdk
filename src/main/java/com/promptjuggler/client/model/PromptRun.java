@@ -28,6 +28,7 @@ import com.promptjuggler.client.model.EmittedItem;
 import com.promptjuggler.client.model.RunCost;
 import com.promptjuggler.client.model.RunStatus;
 import com.promptjuggler.client.model.TokenUsage;
+import com.promptjuggler.client.model.TranscriptItem;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -51,6 +52,7 @@ import com.promptjuggler.client.ApiClient;
   PromptRun.JSON_PROPERTY_FINISHED_AT,
   PromptRun.JSON_PROPERTY_OUTPUT,
   PromptRun.JSON_PROPERTY_EMITTED,
+  PromptRun.JSON_PROPERTY_TRANSCRIPT,
   PromptRun.JSON_PROPERTY_ERROR,
   PromptRun.JSON_PROPERTY_TOKEN_USAGE,
   PromptRun.JSON_PROPERTY_COST
@@ -78,6 +80,10 @@ public class PromptRun {
   public static final String JSON_PROPERTY_EMITTED = "emitted";
   @jakarta.annotation.Nonnull
   private List<EmittedItem> emitted = new ArrayList<>();
+
+  public static final String JSON_PROPERTY_TRANSCRIPT = "transcript";
+  @jakarta.annotation.Nonnull
+  private List<TranscriptItem> transcript = new ArrayList<>();
 
   public static final String JSON_PROPERTY_ERROR = "error";
   private JsonNullable<String> error = JsonNullable.<String>undefined();
@@ -259,6 +265,38 @@ public class PromptRun {
   }
 
 
+  public PromptRun transcript(@jakarta.annotation.Nonnull List<TranscriptItem> transcript) {
+    this.transcript = transcript;
+    return this;
+  }
+
+  public PromptRun addTranscriptItem(TranscriptItem transcriptItem) {
+    if (this.transcript == null) {
+      this.transcript = new ArrayList<>();
+    }
+    this.transcript.add(transcriptItem);
+    return this;
+  }
+
+  /**
+   * The run as a renderable sequence: assistant text, the tools it used, and emit payloads in position. Empty until the run completes. &#x60;output&#x60; remains the flat text for callers that only need the answer.
+   * @return transcript
+   */
+  @jakarta.annotation.Nonnull
+  @JsonProperty(value = JSON_PROPERTY_TRANSCRIPT, required = true)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public List<TranscriptItem> getTranscript() {
+    return transcript;
+  }
+
+
+  @JsonProperty(value = JSON_PROPERTY_TRANSCRIPT, required = true)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public void setTranscript(@jakarta.annotation.Nonnull List<TranscriptItem> transcript) {
+    this.transcript = transcript;
+  }
+
+
   public PromptRun error(@jakarta.annotation.Nullable String error) {
     this.error = JsonNullable.<String>of(error);
     return this;
@@ -373,6 +411,7 @@ public class PromptRun {
         equalsNullable(this.finishedAt, promptRun.finishedAt) &&
         equalsNullable(this.output, promptRun.output) &&
         Objects.equals(this.emitted, promptRun.emitted) &&
+        Objects.equals(this.transcript, promptRun.transcript) &&
         equalsNullable(this.error, promptRun.error) &&
         equalsNullable(this.tokenUsage, promptRun.tokenUsage) &&
         equalsNullable(this.cost, promptRun.cost);
@@ -384,7 +423,7 @@ public class PromptRun {
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, status, createdAt, hashCodeNullable(finishedAt), hashCodeNullable(output), emitted, hashCodeNullable(error), hashCodeNullable(tokenUsage), hashCodeNullable(cost));
+    return Objects.hash(id, status, createdAt, hashCodeNullable(finishedAt), hashCodeNullable(output), emitted, transcript, hashCodeNullable(error), hashCodeNullable(tokenUsage), hashCodeNullable(cost));
   }
 
   private static <T> int hashCodeNullable(JsonNullable<T> a) {
@@ -404,6 +443,7 @@ public class PromptRun {
     sb.append("    finishedAt: ").append(toIndentedString(finishedAt)).append("\n");
     sb.append("    output: ").append(toIndentedString(output)).append("\n");
     sb.append("    emitted: ").append(toIndentedString(emitted)).append("\n");
+    sb.append("    transcript: ").append(toIndentedString(transcript)).append("\n");
     sb.append("    error: ").append(toIndentedString(error)).append("\n");
     sb.append("    tokenUsage: ").append(toIndentedString(tokenUsage)).append("\n");
     sb.append("    cost: ").append(toIndentedString(cost)).append("\n");
@@ -481,6 +521,16 @@ public class PromptRun {
       for (int i = 0; i < getEmitted().size(); i++) {
         if (getEmitted().get(i) != null) {
           joiner.add(getEmitted().get(i).toUrlQueryString(String.format(java.util.Locale.ROOT, "%semitted%s%s", prefix, suffix,
+          "".equals(suffix) ? "" : String.format(java.util.Locale.ROOT, "%s%d%s", containerPrefix, i, containerSuffix))));
+        }
+      }
+    }
+
+    // add `transcript` to the URL query string
+    if (getTranscript() != null) {
+      for (int i = 0; i < getTranscript().size(); i++) {
+        if (getTranscript().get(i) != null) {
+          joiner.add(getTranscript().get(i).toUrlQueryString(String.format(java.util.Locale.ROOT, "%stranscript%s%s", prefix, suffix,
           "".equals(suffix) ? "" : String.format(java.util.Locale.ROOT, "%s%d%s", containerPrefix, i, containerSuffix))));
         }
       }
