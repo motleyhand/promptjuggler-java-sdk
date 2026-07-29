@@ -38,7 +38,6 @@ import com.promptjuggler.client.ApiClient;
  */
 @JsonPropertyOrder({
   Emit.JSON_PROPERTY_PARAMS_SCHEMA,
-  Emit.JSON_PROPERTY_INLINE,
   Emit.JSON_PROPERTY_NAME,
   Emit.JSON_PROPERTY_DESCRIPTION,
   Emit.JSON_PROPERTY_FAIL_FAST,
@@ -49,10 +48,6 @@ public class Emit {
   public static final String JSON_PROPERTY_PARAMS_SCHEMA = "paramsSchema";
   @jakarta.annotation.Nonnull
   private String paramsSchema;
-
-  public static final String JSON_PROPERTY_INLINE = "inline";
-  @jakarta.annotation.Nonnull
-  private Boolean inline;
 
   public static final String JSON_PROPERTY_NAME = "name";
   @jakarta.annotation.Nonnull
@@ -126,30 +121,6 @@ public class Emit {
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public void setParamsSchema(@jakarta.annotation.Nonnull String paramsSchema) {
     this.paramsSchema = paramsSchema;
-  }
-
-
-  public Emit inline(@jakarta.annotation.Nonnull Boolean inline) {
-    this.inline = inline;
-    return this;
-  }
-
-  /**
-   * Whether to also splice the payload into the output text as an emit:&lt;name&gt; markdown fence at the call position.
-   * @return inline
-   */
-  @jakarta.annotation.Nonnull
-  @JsonProperty(value = JSON_PROPERTY_INLINE, required = true)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public Boolean getInline() {
-    return inline;
-  }
-
-
-  @JsonProperty(value = JSON_PROPERTY_INLINE, required = true)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public void setInline(@jakarta.annotation.Nonnull Boolean inline) {
-    this.inline = inline;
   }
 
 
@@ -270,7 +241,6 @@ public class Emit {
     }
     Emit emit = (Emit) o;
     return Objects.equals(this.paramsSchema, emit.paramsSchema) &&
-        Objects.equals(this.inline, emit.inline) &&
         Objects.equals(this.name, emit.name) &&
         equalsNullable(this.description, emit.description) &&
         Objects.equals(this.failFast, emit.failFast) &&
@@ -283,7 +253,7 @@ public class Emit {
 
   @Override
   public int hashCode() {
-    return Objects.hash(paramsSchema, inline, name, hashCodeNullable(description), failFast, type);
+    return Objects.hash(paramsSchema, name, hashCodeNullable(description), failFast, type);
   }
 
   private static <T> int hashCodeNullable(JsonNullable<T> a) {
@@ -298,7 +268,6 @@ public class Emit {
     StringBuilder sb = new StringBuilder();
     sb.append("class Emit {\n");
     sb.append("    paramsSchema: ").append(toIndentedString(paramsSchema)).append("\n");
-    sb.append("    inline: ").append(toIndentedString(inline)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    description: ").append(toIndentedString(description)).append("\n");
     sb.append("    failFast: ").append(toIndentedString(failFast)).append("\n");
@@ -350,11 +319,6 @@ public class Emit {
     // add `paramsSchema` to the URL query string
     if (getParamsSchema() != null) {
       joiner.add(String.format(java.util.Locale.ROOT, "%sparamsSchema%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getParamsSchema()))));
-    }
-
-    // add `inline` to the URL query string
-    if (getInline() != null) {
-      joiner.add(String.format(java.util.Locale.ROOT, "%sinline%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getInline()))));
     }
 
     // add `name` to the URL query string
