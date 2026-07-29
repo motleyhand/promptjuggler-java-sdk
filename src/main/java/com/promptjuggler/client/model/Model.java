@@ -64,9 +64,13 @@ public enum Model {
   
   GEMINI_3_1_PRO_PREVIEW("gemini-3.1-pro-preview"),
   
+  GEMINI_3_6_FLASH("gemini-3.6-flash"),
+  
   GEMINI_3_5_FLASH("gemini-3.5-flash"),
   
   GEMINI_3_FLASH_PREVIEW("gemini-3-flash-preview"),
+  
+  GEMINI_3_5_FLASH_LITE("gemini-3.5-flash-lite"),
   
   GEMINI_3_1_FLASH_LITE("gemini-3.1-flash-lite"),
   
@@ -77,6 +81,8 @@ public enum Model {
   GEMINI_2_5_FLASH_LITE("gemini-2.5-flash-lite"),
   
   CLAUDE_FABLE_5("claude-fable-5"),
+  
+  CLAUDE_OPUS_5("claude-opus-5"),
   
   CLAUDE_OPUS_4_8("claude-opus-4-8"),
   
