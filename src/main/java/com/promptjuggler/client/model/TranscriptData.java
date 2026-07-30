@@ -25,6 +25,8 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonValue;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 
@@ -45,7 +47,7 @@ public class TranscriptData {
 
   public static final String JSON_PROPERTY_PAYLOAD = "payload";
   @jakarta.annotation.Nonnull
-  private Object payload;
+  private Map<String, Object> payload = new HashMap<>();
 
   /**
    * Gets or Sets type
@@ -111,8 +113,16 @@ public class TranscriptData {
   }
 
 
-  public TranscriptData payload(@jakarta.annotation.Nonnull Object payload) {
+  public TranscriptData payload(@jakarta.annotation.Nonnull Map<String, Object> payload) {
     this.payload = payload;
+    return this;
+  }
+
+  public TranscriptData putPayloadItem(String key, Object payloadItem) {
+    if (this.payload == null) {
+      this.payload = new HashMap<>();
+    }
+    this.payload.put(key, payloadItem);
     return this;
   }
 
@@ -122,15 +132,15 @@ public class TranscriptData {
    */
   @jakarta.annotation.Nonnull
   @JsonProperty(value = JSON_PROPERTY_PAYLOAD, required = true)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public Object getPayload() {
+  @JsonInclude(content = JsonInclude.Include.ALWAYS, value = JsonInclude.Include.ALWAYS)
+  public Map<String, Object> getPayload() {
     return payload;
   }
 
 
   @JsonProperty(value = JSON_PROPERTY_PAYLOAD, required = true)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public void setPayload(@jakarta.annotation.Nonnull Object payload) {
+  @JsonInclude(content = JsonInclude.Include.ALWAYS, value = JsonInclude.Include.ALWAYS)
+  public void setPayload(@jakarta.annotation.Nonnull Map<String, Object> payload) {
     this.payload = payload;
   }
 
@@ -239,7 +249,11 @@ public class TranscriptData {
 
     // add `payload` to the URL query string
     if (getPayload() != null) {
-      joiner.add(String.format(java.util.Locale.ROOT, "%spayload%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getPayload()))));
+      for (String _key : getPayload().keySet()) {
+        joiner.add(String.format(java.util.Locale.ROOT, "%spayload%s%s=%s", prefix, suffix,
+            "".equals(suffix) ? "" : String.format(java.util.Locale.ROOT, "%s%d%s", containerPrefix, _key, containerSuffix),
+            getPayload().get(_key), ApiClient.urlEncode(ApiClient.valueToString(getPayload().get(_key)))));
+      }
     }
 
     // add `type` to the URL query string

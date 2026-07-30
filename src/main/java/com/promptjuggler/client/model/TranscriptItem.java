@@ -34,7 +34,9 @@ import com.promptjuggler.client.model.TranscriptText;
 import com.promptjuggler.client.model.TranscriptTool;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import com.fasterxml.jackson.core.type.TypeReference;
