@@ -146,7 +146,7 @@ class RequestsTest {
     // own mapper so this exercises the same coercion config getPrompt uses.
     ObjectMapper mapper = new ApiClient().getObjectMapper();
     VersionRef ref =
-        mapper.readValue("{\"parentId\":\"" + UUID2 + "\",\"idOrTag\":1}", VersionRef.class);
+        mapper.readValue("{\"definitionId\":\"" + UUID2 + "\",\"idOrTag\":1}", VersionRef.class);
     assertEquals("1", ref.getIdOrTag());
   }
 

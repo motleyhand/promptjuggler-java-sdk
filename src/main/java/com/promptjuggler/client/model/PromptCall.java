@@ -58,8 +58,8 @@ public class PromptCall {
   private JsonNullable<String> description = JsonNullable.<String>undefined();
 
   public static final String JSON_PROPERTY_FAIL_FAST = "failFast";
-  @jakarta.annotation.Nullable
-  private Boolean failFast = false;
+  @jakarta.annotation.Nonnull
+  private Boolean failFast;
 
   /**
    * Gets or Sets type
@@ -181,7 +181,7 @@ public class PromptCall {
   }
 
 
-  public PromptCall failFast(@jakarta.annotation.Nullable Boolean failFast) {
+  public PromptCall failFast(@jakarta.annotation.Nonnull Boolean failFast) {
     this.failFast = failFast;
     return this;
   }
@@ -190,17 +190,17 @@ public class PromptCall {
    * Whether to stop processing if a tool call fails.
    * @return failFast
    */
-  @jakarta.annotation.Nullable
-  @JsonProperty(value = JSON_PROPERTY_FAIL_FAST, required = false)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @jakarta.annotation.Nonnull
+  @JsonProperty(value = JSON_PROPERTY_FAIL_FAST, required = true)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public Boolean getFailFast() {
     return failFast;
   }
 
 
-  @JsonProperty(value = JSON_PROPERTY_FAIL_FAST, required = false)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setFailFast(@jakarta.annotation.Nullable Boolean failFast) {
+  @JsonProperty(value = JSON_PROPERTY_FAIL_FAST, required = true)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public void setFailFast(@jakarta.annotation.Nonnull Boolean failFast) {
     this.failFast = failFast;
   }
 

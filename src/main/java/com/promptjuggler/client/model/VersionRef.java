@@ -26,6 +26,10 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonValue;
 import java.util.Arrays;
 import java.util.UUID;
+import org.openapitools.jackson.nullable.JsonNullable;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.openapitools.jackson.nullable.JsonNullable;
+import java.util.NoSuchElementException;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 
@@ -34,14 +38,18 @@ import com.promptjuggler.client.ApiClient;
  * A reference to a revision.
  */
 @JsonPropertyOrder({
+  VersionRef.JSON_PROPERTY_DEFINITION_ID,
   VersionRef.JSON_PROPERTY_PARENT_ID,
   VersionRef.JSON_PROPERTY_ID_OR_TAG
 })
 @jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.23.0")
 public class VersionRef {
-  public static final String JSON_PROPERTY_PARENT_ID = "parentId";
+  public static final String JSON_PROPERTY_DEFINITION_ID = "definitionId";
   @jakarta.annotation.Nonnull
-  private UUID parentId;
+  private UUID definitionId;
+
+  public static final String JSON_PROPERTY_PARENT_ID = "parentId";
+  private JsonNullable<UUID> parentId = JsonNullable.<UUID>undefined();
 
   public static final String JSON_PROPERTY_ID_OR_TAG = "idOrTag";
   @jakarta.annotation.Nonnull
@@ -50,27 +58,59 @@ public class VersionRef {
   public VersionRef() { 
   }
 
-  public VersionRef parentId(@jakarta.annotation.Nonnull UUID parentId) {
-    this.parentId = parentId;
+  public VersionRef definitionId(@jakarta.annotation.Nonnull UUID definitionId) {
+    this.definitionId = definitionId;
     return this;
   }
 
   /**
    * Definition – prompt or workflow – ID.
-   * @return parentId
+   * @return definitionId
    */
   @jakarta.annotation.Nonnull
-  @JsonProperty(value = JSON_PROPERTY_PARENT_ID, required = true)
+  @JsonProperty(value = JSON_PROPERTY_DEFINITION_ID, required = true)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public UUID getParentId() {
-    return parentId;
+  public UUID getDefinitionId() {
+    return definitionId;
   }
 
 
-  @JsonProperty(value = JSON_PROPERTY_PARENT_ID, required = true)
+  @JsonProperty(value = JSON_PROPERTY_DEFINITION_ID, required = true)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public void setParentId(@jakarta.annotation.Nonnull UUID parentId) {
+  public void setDefinitionId(@jakarta.annotation.Nonnull UUID definitionId) {
+    this.definitionId = definitionId;
+  }
+
+
+  public VersionRef parentId(@jakarta.annotation.Nullable UUID parentId) {
+    this.parentId = JsonNullable.<UUID>of(parentId);
+    return this;
+  }
+
+  /**
+   * Deprecated alias of definitionId.
+   * @return parentId
+   */
+  @jakarta.annotation.Nullable
+  @JsonIgnore
+  public UUID getParentId() {
+        return parentId.orElse(null);
+  }
+
+  @JsonProperty(value = JSON_PROPERTY_PARENT_ID, required = false)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+
+  public JsonNullable<UUID> getParentId_JsonNullable() {
+    return parentId;
+  }
+  
+  @JsonProperty(JSON_PROPERTY_PARENT_ID)
+  public void setParentId_JsonNullable(JsonNullable<UUID> parentId) {
     this.parentId = parentId;
+  }
+
+  public void setParentId(@jakarta.annotation.Nullable UUID parentId) {
+    this.parentId = JsonNullable.<UUID>of(parentId);
   }
 
 
@@ -110,19 +150,32 @@ public class VersionRef {
       return false;
     }
     VersionRef versionRef = (VersionRef) o;
-    return Objects.equals(this.parentId, versionRef.parentId) &&
+    return Objects.equals(this.definitionId, versionRef.definitionId) &&
+        equalsNullable(this.parentId, versionRef.parentId) &&
         Objects.equals(this.idOrTag, versionRef.idOrTag);
+  }
+
+  private static <T> boolean equalsNullable(JsonNullable<T> a, JsonNullable<T> b) {
+    return a == b || (a != null && b != null && a.isPresent() && b.isPresent() && Objects.deepEquals(a.get(), b.get()));
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(parentId, idOrTag);
+    return Objects.hash(definitionId, hashCodeNullable(parentId), idOrTag);
+  }
+
+  private static <T> int hashCodeNullable(JsonNullable<T> a) {
+    if (a == null) {
+      return 1;
+    }
+    return a.isPresent() ? Arrays.deepHashCode(new Object[]{a.get()}) : 31;
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class VersionRef {\n");
+    sb.append("    definitionId: ").append(toIndentedString(definitionId)).append("\n");
     sb.append("    parentId: ").append(toIndentedString(parentId)).append("\n");
     sb.append("    idOrTag: ").append(toIndentedString(idOrTag)).append("\n");
     sb.append("}");
@@ -168,6 +221,11 @@ public class VersionRef {
     }
 
     StringJoiner joiner = new StringJoiner("&");
+
+    // add `definitionId` to the URL query string
+    if (getDefinitionId() != null) {
+      joiner.add(String.format(java.util.Locale.ROOT, "%sdefinitionId%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getDefinitionId()))));
+    }
 
     // add `parentId` to the URL query string
     if (getParentId() != null) {
