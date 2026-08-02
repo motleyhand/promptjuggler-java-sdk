@@ -26,10 +26,6 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonValue;
 import java.util.Arrays;
 import java.util.UUID;
-import org.openapitools.jackson.nullable.JsonNullable;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.openapitools.jackson.nullable.JsonNullable;
-import java.util.NoSuchElementException;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 
@@ -39,7 +35,6 @@ import com.promptjuggler.client.ApiClient;
  */
 @JsonPropertyOrder({
   VersionRef.JSON_PROPERTY_DEFINITION_ID,
-  VersionRef.JSON_PROPERTY_PARENT_ID,
   VersionRef.JSON_PROPERTY_ID_OR_TAG
 })
 @jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.23.0")
@@ -47,9 +42,6 @@ public class VersionRef {
   public static final String JSON_PROPERTY_DEFINITION_ID = "definitionId";
   @jakarta.annotation.Nonnull
   private UUID definitionId;
-
-  public static final String JSON_PROPERTY_PARENT_ID = "parentId";
-  private JsonNullable<UUID> parentId = JsonNullable.<UUID>undefined();
 
   public static final String JSON_PROPERTY_ID_OR_TAG = "idOrTag";
   @jakarta.annotation.Nonnull
@@ -79,38 +71,6 @@ public class VersionRef {
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public void setDefinitionId(@jakarta.annotation.Nonnull UUID definitionId) {
     this.definitionId = definitionId;
-  }
-
-
-  public VersionRef parentId(@jakarta.annotation.Nullable UUID parentId) {
-    this.parentId = JsonNullable.<UUID>of(parentId);
-    return this;
-  }
-
-  /**
-   * Deprecated alias of definitionId.
-   * @return parentId
-   */
-  @jakarta.annotation.Nullable
-  @JsonIgnore
-  public UUID getParentId() {
-        return parentId.orElse(null);
-  }
-
-  @JsonProperty(value = JSON_PROPERTY_PARENT_ID, required = false)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-
-  public JsonNullable<UUID> getParentId_JsonNullable() {
-    return parentId;
-  }
-  
-  @JsonProperty(JSON_PROPERTY_PARENT_ID)
-  public void setParentId_JsonNullable(JsonNullable<UUID> parentId) {
-    this.parentId = parentId;
-  }
-
-  public void setParentId(@jakarta.annotation.Nullable UUID parentId) {
-    this.parentId = JsonNullable.<UUID>of(parentId);
   }
 
 
@@ -151,24 +111,12 @@ public class VersionRef {
     }
     VersionRef versionRef = (VersionRef) o;
     return Objects.equals(this.definitionId, versionRef.definitionId) &&
-        equalsNullable(this.parentId, versionRef.parentId) &&
         Objects.equals(this.idOrTag, versionRef.idOrTag);
-  }
-
-  private static <T> boolean equalsNullable(JsonNullable<T> a, JsonNullable<T> b) {
-    return a == b || (a != null && b != null && a.isPresent() && b.isPresent() && Objects.deepEquals(a.get(), b.get()));
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(definitionId, hashCodeNullable(parentId), idOrTag);
-  }
-
-  private static <T> int hashCodeNullable(JsonNullable<T> a) {
-    if (a == null) {
-      return 1;
-    }
-    return a.isPresent() ? Arrays.deepHashCode(new Object[]{a.get()}) : 31;
+    return Objects.hash(definitionId, idOrTag);
   }
 
   @Override
@@ -176,7 +124,6 @@ public class VersionRef {
     StringBuilder sb = new StringBuilder();
     sb.append("class VersionRef {\n");
     sb.append("    definitionId: ").append(toIndentedString(definitionId)).append("\n");
-    sb.append("    parentId: ").append(toIndentedString(parentId)).append("\n");
     sb.append("    idOrTag: ").append(toIndentedString(idOrTag)).append("\n");
     sb.append("}");
     return sb.toString();
@@ -225,11 +172,6 @@ public class VersionRef {
     // add `definitionId` to the URL query string
     if (getDefinitionId() != null) {
       joiner.add(String.format(java.util.Locale.ROOT, "%sdefinitionId%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getDefinitionId()))));
-    }
-
-    // add `parentId` to the URL query string
-    if (getParentId() != null) {
-      joiner.add(String.format(java.util.Locale.ROOT, "%sparentId%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getParentId()))));
     }
 
     // add `idOrTag` to the URL query string
