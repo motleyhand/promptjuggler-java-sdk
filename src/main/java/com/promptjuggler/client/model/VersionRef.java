@@ -38,16 +38,12 @@ import com.promptjuggler.client.ApiClient;
  * A reference to a revision.
  */
 @JsonPropertyOrder({
-  VersionRef.JSON_PROPERTY_DEFINITION_ID,
   VersionRef.JSON_PROPERTY_PARENT_ID,
-  VersionRef.JSON_PROPERTY_ID_OR_TAG
+  VersionRef.JSON_PROPERTY_ID_OR_TAG,
+  VersionRef.JSON_PROPERTY_DEFINITION_ID
 })
 @jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.23.0")
 public class VersionRef {
-  public static final String JSON_PROPERTY_DEFINITION_ID = "definitionId";
-  @jakarta.annotation.Nonnull
-  private UUID definitionId;
-
   public static final String JSON_PROPERTY_PARENT_ID = "parentId";
   private JsonNullable<UUID> parentId = JsonNullable.<UUID>undefined();
 
@@ -55,32 +51,12 @@ public class VersionRef {
   @jakarta.annotation.Nonnull
   private String idOrTag;
 
+  public static final String JSON_PROPERTY_DEFINITION_ID = "definitionId";
+  @jakarta.annotation.Nonnull
+  private UUID definitionId;
+
   public VersionRef() { 
   }
-
-  public VersionRef definitionId(@jakarta.annotation.Nonnull UUID definitionId) {
-    this.definitionId = definitionId;
-    return this;
-  }
-
-  /**
-   * Definition – prompt or workflow – ID.
-   * @return definitionId
-   */
-  @jakarta.annotation.Nonnull
-  @JsonProperty(value = JSON_PROPERTY_DEFINITION_ID, required = true)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public UUID getDefinitionId() {
-    return definitionId;
-  }
-
-
-  @JsonProperty(value = JSON_PROPERTY_DEFINITION_ID, required = true)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public void setDefinitionId(@jakarta.annotation.Nonnull UUID definitionId) {
-    this.definitionId = definitionId;
-  }
-
 
   public VersionRef parentId(@jakarta.annotation.Nullable UUID parentId) {
     this.parentId = JsonNullable.<UUID>of(parentId);
@@ -138,6 +114,30 @@ public class VersionRef {
   }
 
 
+  public VersionRef definitionId(@jakarta.annotation.Nonnull UUID definitionId) {
+    this.definitionId = definitionId;
+    return this;
+  }
+
+  /**
+   * Definition – prompt or workflow – ID.
+   * @return definitionId
+   */
+  @jakarta.annotation.Nonnull
+  @JsonProperty(value = JSON_PROPERTY_DEFINITION_ID, required = true)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public UUID getDefinitionId() {
+    return definitionId;
+  }
+
+
+  @JsonProperty(value = JSON_PROPERTY_DEFINITION_ID, required = true)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public void setDefinitionId(@jakarta.annotation.Nonnull UUID definitionId) {
+    this.definitionId = definitionId;
+  }
+
+
   /**
    * Return true if this VersionRef object is equal to o.
    */
@@ -150,9 +150,9 @@ public class VersionRef {
       return false;
     }
     VersionRef versionRef = (VersionRef) o;
-    return Objects.equals(this.definitionId, versionRef.definitionId) &&
-        equalsNullable(this.parentId, versionRef.parentId) &&
-        Objects.equals(this.idOrTag, versionRef.idOrTag);
+    return equalsNullable(this.parentId, versionRef.parentId) &&
+        Objects.equals(this.idOrTag, versionRef.idOrTag) &&
+        Objects.equals(this.definitionId, versionRef.definitionId);
   }
 
   private static <T> boolean equalsNullable(JsonNullable<T> a, JsonNullable<T> b) {
@@ -161,7 +161,7 @@ public class VersionRef {
 
   @Override
   public int hashCode() {
-    return Objects.hash(definitionId, hashCodeNullable(parentId), idOrTag);
+    return Objects.hash(hashCodeNullable(parentId), idOrTag, definitionId);
   }
 
   private static <T> int hashCodeNullable(JsonNullable<T> a) {
@@ -175,9 +175,9 @@ public class VersionRef {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class VersionRef {\n");
-    sb.append("    definitionId: ").append(toIndentedString(definitionId)).append("\n");
     sb.append("    parentId: ").append(toIndentedString(parentId)).append("\n");
     sb.append("    idOrTag: ").append(toIndentedString(idOrTag)).append("\n");
+    sb.append("    definitionId: ").append(toIndentedString(definitionId)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -222,11 +222,6 @@ public class VersionRef {
 
     StringJoiner joiner = new StringJoiner("&");
 
-    // add `definitionId` to the URL query string
-    if (getDefinitionId() != null) {
-      joiner.add(String.format(java.util.Locale.ROOT, "%sdefinitionId%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getDefinitionId()))));
-    }
-
     // add `parentId` to the URL query string
     if (getParentId() != null) {
       joiner.add(String.format(java.util.Locale.ROOT, "%sparentId%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getParentId()))));
@@ -235,6 +230,11 @@ public class VersionRef {
     // add `idOrTag` to the URL query string
     if (getIdOrTag() != null) {
       joiner.add(String.format(java.util.Locale.ROOT, "%sidOrTag%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getIdOrTag()))));
+    }
+
+    // add `definitionId` to the URL query string
+    if (getDefinitionId() != null) {
+      joiner.add(String.format(java.util.Locale.ROOT, "%sdefinitionId%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getDefinitionId()))));
     }
 
     return joiner.toString();
