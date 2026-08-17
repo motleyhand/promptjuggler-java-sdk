@@ -64,6 +64,8 @@ public enum Model {
   
   GEMINI_3_1_PRO_PREVIEW("gemini-3.1-pro-preview"),
   
+  GEMINI_3_7_FLASH("gemini-3.7-flash"),
+  
   GEMINI_3_6_FLASH("gemini-3.6-flash"),
   
   GEMINI_3_5_FLASH("gemini-3.5-flash"),
