@@ -367,7 +367,7 @@ public class PromptRun {
   }
 
   /**
-   * Cost breakdown for the run. Null while pending.
+   * Cost breakdown for the run. Null while pending, or when no published rate covers the run.
    * @return cost
    */
   @jakarta.annotation.Nullable

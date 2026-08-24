@@ -295,7 +295,7 @@ public class WorkflowRun {
   }
 
   /**
-   * Aggregated cost breakdown across the workflow run. Null while pending.
+   * Aggregated cost breakdown across the workflow run. Null while pending, or when no published rate covers one of its runs.
    * @return cost
    */
   @jakarta.annotation.Nullable
