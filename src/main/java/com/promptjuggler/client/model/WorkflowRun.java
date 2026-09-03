@@ -207,7 +207,7 @@ public class WorkflowRun {
   }
 
   /**
-   * Map of output node names to their values. Empty object while pending.
+   * Map of output node names to their values. Only completed output nodes appear, so a pending or failed run can return a partial map — read &#x60;status&#x60; for completeness.
    * @return outputs
    */
   @jakarta.annotation.Nonnull
@@ -239,7 +239,7 @@ public class WorkflowRun {
   }
 
   /**
-   * List of error messages from failed nodes. Empty array on success.
+   * Node run messages: failures, warnings from nodes that completed anyway (e.g. a non-fail-fast assertion), and the latest error of a node still retrying. Non-empty does not mean the run failed — read &#x60;status&#x60;.
    * @return errors
    */
   @jakarta.annotation.Nonnull

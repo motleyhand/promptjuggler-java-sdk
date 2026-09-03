@@ -207,7 +207,7 @@ public class PromptRun {
   }
 
   /**
-   * LLM output text. Null while pending or when the run failed.
+   * LLM output text produced so far; read &#x60;status&#x60; for completeness. Null when the run failed, or when the model returned no text — e.g. a turn that was only tool calls or only reasoning.
    * @return output
    */
   @jakarta.annotation.Nullable
@@ -303,7 +303,7 @@ public class PromptRun {
   }
 
   /**
-   * Error message if the run failed. Null on success.
+   * Error message from the latest failed attempt, kept even once a retry recovers — so a pending or completed run can carry one. Read &#x60;status&#x60; for the outcome.
    * @return error
    */
   @jakarta.annotation.Nullable
@@ -335,7 +335,7 @@ public class PromptRun {
   }
 
   /**
-   * Token usage for the successful run. Null while pending or when the run failed.
+   * Token usage accumulated over successful turns — a run that failed later still reports the earlier ones. Null until the first turn succeeds.
    * @return tokenUsage
    */
   @jakarta.annotation.Nullable
