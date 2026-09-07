@@ -30,6 +30,8 @@ import com.fasterxml.jackson.annotation.JsonValue;
  */
 public enum Model {
   
+  GPT_6_ASTRA("gpt-6-astra"),
+  
   GPT_5_6_SOL("gpt-5.6-sol"),
   
   GPT_5_6_TERRA("gpt-5.6-terra"),
@@ -64,6 +66,8 @@ public enum Model {
   
   GEMINI_3_1_PRO_PREVIEW("gemini-3.1-pro-preview"),
   
+  GEMINI_3_8_FLASH("gemini-3.8-flash"),
+  
   GEMINI_3_7_FLASH("gemini-3.7-flash"),
   
   GEMINI_3_6_FLASH("gemini-3.6-flash"),
@@ -81,6 +85,8 @@ public enum Model {
   GEMINI_2_5_FLASH("gemini-2.5-flash"),
   
   GEMINI_2_5_FLASH_LITE("gemini-2.5-flash-lite"),
+  
+  CLAUDE_FABLE_5_1("claude-fable-5-1"),
   
   CLAUDE_FABLE_5("claude-fable-5"),
   
