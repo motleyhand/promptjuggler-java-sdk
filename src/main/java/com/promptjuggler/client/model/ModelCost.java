@@ -35,6 +35,7 @@ import com.promptjuggler.client.ApiClient;
 @JsonPropertyOrder({
   ModelCost.JSON_PROPERTY_INPUT,
   ModelCost.JSON_PROPERTY_CACHED_INPUT,
+  ModelCost.JSON_PROPERTY_CACHE_WRITE,
   ModelCost.JSON_PROPERTY_OUTPUT,
   ModelCost.JSON_PROPERTY_WEB_SEARCH,
   ModelCost.JSON_PROPERTY_TOTAL
@@ -48,6 +49,10 @@ public class ModelCost {
   public static final String JSON_PROPERTY_CACHED_INPUT = "cachedInput";
   @jakarta.annotation.Nonnull
   private Float cachedInput;
+
+  public static final String JSON_PROPERTY_CACHE_WRITE = "cacheWrite";
+  @jakarta.annotation.Nonnull
+  private Float cacheWrite;
 
   public static final String JSON_PROPERTY_OUTPUT = "output";
   @jakarta.annotation.Nonnull
@@ -109,6 +114,30 @@ public class ModelCost {
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public void setCachedInput(@jakarta.annotation.Nonnull Float cachedInput) {
     this.cachedInput = cachedInput;
+  }
+
+
+  public ModelCost cacheWrite(@jakarta.annotation.Nonnull Float cacheWrite) {
+    this.cacheWrite = cacheWrite;
+    return this;
+  }
+
+  /**
+   * Get cacheWrite
+   * @return cacheWrite
+   */
+  @jakarta.annotation.Nonnull
+  @JsonProperty(value = JSON_PROPERTY_CACHE_WRITE, required = true)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public Float getCacheWrite() {
+    return cacheWrite;
+  }
+
+
+  @JsonProperty(value = JSON_PROPERTY_CACHE_WRITE, required = true)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public void setCacheWrite(@jakarta.annotation.Nonnull Float cacheWrite) {
+    this.cacheWrite = cacheWrite;
   }
 
 
@@ -198,6 +227,7 @@ public class ModelCost {
     ModelCost modelCost = (ModelCost) o;
     return Objects.equals(this.input, modelCost.input) &&
         Objects.equals(this.cachedInput, modelCost.cachedInput) &&
+        Objects.equals(this.cacheWrite, modelCost.cacheWrite) &&
         Objects.equals(this.output, modelCost.output) &&
         Objects.equals(this.webSearch, modelCost.webSearch) &&
         Objects.equals(this.total, modelCost.total);
@@ -205,7 +235,7 @@ public class ModelCost {
 
   @Override
   public int hashCode() {
-    return Objects.hash(input, cachedInput, output, webSearch, total);
+    return Objects.hash(input, cachedInput, cacheWrite, output, webSearch, total);
   }
 
   @Override
@@ -214,6 +244,7 @@ public class ModelCost {
     sb.append("class ModelCost {\n");
     sb.append("    input: ").append(toIndentedString(input)).append("\n");
     sb.append("    cachedInput: ").append(toIndentedString(cachedInput)).append("\n");
+    sb.append("    cacheWrite: ").append(toIndentedString(cacheWrite)).append("\n");
     sb.append("    output: ").append(toIndentedString(output)).append("\n");
     sb.append("    webSearch: ").append(toIndentedString(webSearch)).append("\n");
     sb.append("    total: ").append(toIndentedString(total)).append("\n");
@@ -269,6 +300,11 @@ public class ModelCost {
     // add `cachedInput` to the URL query string
     if (getCachedInput() != null) {
       joiner.add(String.format(java.util.Locale.ROOT, "%scachedInput%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getCachedInput()))));
+    }
+
+    // add `cacheWrite` to the URL query string
+    if (getCacheWrite() != null) {
+      joiner.add(String.format(java.util.Locale.ROOT, "%scacheWrite%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getCacheWrite()))));
     }
 
     // add `output` to the URL query string

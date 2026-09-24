@@ -39,7 +39,8 @@ import com.promptjuggler.client.ApiClient;
   TokenUsage.JSON_PROPERTY_OUTPUT,
   TokenUsage.JSON_PROPERTY_REASONING,
   TokenUsage.JSON_PROPERTY_TOTAL,
-  TokenUsage.JSON_PROPERTY_SERVICE_TIER
+  TokenUsage.JSON_PROPERTY_SERVICE_TIER,
+  TokenUsage.JSON_PROPERTY_INPUT_CACHE_WRITE
 })
 @jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.23.0")
 public class TokenUsage {
@@ -66,6 +67,10 @@ public class TokenUsage {
   public static final String JSON_PROPERTY_SERVICE_TIER = "serviceTier";
   @jakarta.annotation.Nullable
   private ServiceTier serviceTier;
+
+  public static final String JSON_PROPERTY_INPUT_CACHE_WRITE = "inputCacheWrite";
+  @jakarta.annotation.Nullable
+  private Integer inputCacheWrite = 0;
 
   public TokenUsage() { 
   }
@@ -214,6 +219,30 @@ public class TokenUsage {
   }
 
 
+  public TokenUsage inputCacheWrite(@jakarta.annotation.Nullable Integer inputCacheWrite) {
+    this.inputCacheWrite = inputCacheWrite;
+    return this;
+  }
+
+  /**
+   * Get inputCacheWrite
+   * @return inputCacheWrite
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(value = JSON_PROPERTY_INPUT_CACHE_WRITE, required = false)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public Integer getInputCacheWrite() {
+    return inputCacheWrite;
+  }
+
+
+  @JsonProperty(value = JSON_PROPERTY_INPUT_CACHE_WRITE, required = false)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setInputCacheWrite(@jakarta.annotation.Nullable Integer inputCacheWrite) {
+    this.inputCacheWrite = inputCacheWrite;
+  }
+
+
   /**
    * Return true if this TokenUsage object is equal to o.
    */
@@ -231,12 +260,13 @@ public class TokenUsage {
         Objects.equals(this.output, tokenUsage.output) &&
         Objects.equals(this.reasoning, tokenUsage.reasoning) &&
         Objects.equals(this.total, tokenUsage.total) &&
-        Objects.equals(this.serviceTier, tokenUsage.serviceTier);
+        Objects.equals(this.serviceTier, tokenUsage.serviceTier) &&
+        Objects.equals(this.inputCacheWrite, tokenUsage.inputCacheWrite);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(input, inputCached, output, reasoning, total, serviceTier);
+    return Objects.hash(input, inputCached, output, reasoning, total, serviceTier, inputCacheWrite);
   }
 
   @Override
@@ -249,6 +279,7 @@ public class TokenUsage {
     sb.append("    reasoning: ").append(toIndentedString(reasoning)).append("\n");
     sb.append("    total: ").append(toIndentedString(total)).append("\n");
     sb.append("    serviceTier: ").append(toIndentedString(serviceTier)).append("\n");
+    sb.append("    inputCacheWrite: ").append(toIndentedString(inputCacheWrite)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -321,6 +352,11 @@ public class TokenUsage {
     // add `serviceTier` to the URL query string
     if (getServiceTier() != null) {
       joiner.add(String.format(java.util.Locale.ROOT, "%sserviceTier%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getServiceTier()))));
+    }
+
+    // add `inputCacheWrite` to the URL query string
+    if (getInputCacheWrite() != null) {
+      joiner.add(String.format(java.util.Locale.ROOT, "%sinputCacheWrite%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getInputCacheWrite()))));
     }
 
     return joiner.toString();
