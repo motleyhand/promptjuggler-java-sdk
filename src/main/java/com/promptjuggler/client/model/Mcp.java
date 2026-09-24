@@ -157,7 +157,7 @@ public class Mcp {
   }
 
   /**
-   * Authorization token for the MCP server.
+   * Environment variable holding the MCP server’s authorization token, referenced as ${NAME}.
    * @return authorizationToken
    */
   @jakarta.annotation.Nullable
