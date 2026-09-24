@@ -49,9 +49,9 @@ if (run.getStatus() == RunStatus.COMPLETED) {
 }
 ```
 
-Errors surface as `ApiError` (with a `statusCode()`); both it and `NetworkError` extend the
-checked `PromptJugglerException`, which every API call declares `throws`. Verify incoming
-webhooks with `Webhooks.verifySignature()`.
+Errors surface as `ApiError` (with a `statusCode()`), `NetworkError` (no response), or
+`DecodeError` (an undecodable success body); all extend the checked `PromptJugglerException`,
+which every API call declares `throws`. Verify incoming webhooks with `Webhooks.verifySignature()`.
 
 ## Documentation
 

@@ -1,5 +1,6 @@
 package com.promptjuggler;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.promptjuggler.client.ApiClient;
 import com.promptjuggler.client.ApiException;
@@ -37,8 +38,9 @@ import org.jspecify.annotations.Nullable;
  * generated typed models out, with API errors translated into {@link ApiError}. Synchronous.
  *
  * <p>
- * Every call that reaches the API throws the checked {@link PromptJugglerException} (either
- * {@link ApiError} or {@link NetworkError}), so the failure surface is visible at every call site.
+ * Every call that reaches the API throws the checked {@link PromptJugglerException}
+ * ({@link ApiError}, {@link NetworkError} or {@link DecodeError}), so the failure surface is
+ * visible at every call site.
  */
 public final class PromptJuggler {
 
@@ -273,6 +275,8 @@ public final class PromptJuggler {
       return call.call();
     } catch (ApiException e) {
       throw translate(e);
+    } catch (JsonProcessingException e) {
+      throw new DecodeError(e.getMessage(), e);
     } catch (IOException e) {
       throw new NetworkError(e.getMessage(), e);
     } catch (InterruptedException e) {
@@ -284,9 +288,13 @@ public final class PromptJuggler {
   }
 
   private PromptJugglerException translate(ApiException e) {
-    // A response with no status code means the request never landed (DNS, timeout, ...).
+    // No status code: the request never landed (DNS, timeout, ...) or a 2xx body didn't decode,
+    // which has a Jackson cause. So does an unserializable request body (a metadata value other
+    // than the documented String or List<String>); it reads as a DecodeError, accepted.
     if (e.getCode() == 0) {
-      return new NetworkError(e.getMessage(), e);
+      return e.getCause() instanceof JsonProcessingException decode
+          ? new DecodeError(decode.getMessage(), decode)
+          : new NetworkError(e.getMessage(), e);
     }
     String message = extractMessage(e.getResponseBody());
     return new ApiError(message != null ? message : e.getMessage(), e.getCode(), e);
