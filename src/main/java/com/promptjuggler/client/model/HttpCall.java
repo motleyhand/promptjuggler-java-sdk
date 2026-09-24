@@ -71,7 +71,9 @@ public class HttpCall {
     
     PATCH(String.valueOf("PATCH")),
     
-    DELETE(String.valueOf("DELETE"));
+    DELETE(String.valueOf("DELETE")),
+    
+    UNKNOWN_DEFAULT_OPEN_API(String.valueOf("unknown_default_open_api"));
 
     private String value;
 
@@ -96,7 +98,7 @@ public class HttpCall {
           return b;
         }
       }
-      throw new IllegalArgumentException("Unexpected value '" + value + "'");
+      return UNKNOWN_DEFAULT_OPEN_API;
     }
   }
 
@@ -123,7 +125,9 @@ public class HttpCall {
    * Gets or Sets type
    */
   public enum TypeEnum {
-    HTTP(String.valueOf("http"));
+    HTTP(String.valueOf("http")),
+    
+    UNKNOWN_DEFAULT_OPEN_API(String.valueOf("unknown_default_open_api"));
 
     private String value;
 
@@ -148,7 +152,7 @@ public class HttpCall {
           return b;
         }
       }
-      throw new IllegalArgumentException("Unexpected value '" + value + "'");
+      return UNKNOWN_DEFAULT_OPEN_API;
     }
   }
 

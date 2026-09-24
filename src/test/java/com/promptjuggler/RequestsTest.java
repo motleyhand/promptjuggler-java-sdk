@@ -1,12 +1,18 @@
 package com.promptjuggler;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.promptjuggler.client.ApiClient;
+import com.promptjuggler.client.model.HttpCall;
+import com.promptjuggler.client.model.Model;
+import com.promptjuggler.client.model.PromptRevision;
+import com.promptjuggler.client.model.TextFormat;
 import com.promptjuggler.client.model.VersionRef;
 import java.util.List;
 import java.util.Map;
@@ -44,6 +50,38 @@ class RequestsTest {
     try (MockServer server = new MockServer().respond(200, REVISION)) {
       server.client().getPrompt("greeting", 42);
       assertEquals("/api/v1/prompts/greeting/42", server.firstCall().path());
+    }
+  }
+
+  // The API adds fields and enum values without a major version, so a published client must
+  // decode a response carrying ones it doesn't know.
+  @Test
+  void getPromptDecodesFieldsAndEnumValuesNewerThanTheSdk() throws Exception {
+    String revision = "{\"id\":\"" + UUID1 + "\",\"promptId\":\"" + UUID2
+        + "\",\"memory\":\"stateless\",\"provider\":\"openai\",\"model\":\"gpt-9\","
+        + "\"modelParams\":{\"reasoningEffort\":\"ultra\"},"
+        + "\"responseFormat\":{\"type\":\"text\",\"addedLater\":1},\"messages\":[],"
+        + "\"tools\":[{\"type\":\"http\",\"name\":\"lookup\",\"url\":\"https://example.com\","
+        + "\"method\":\"QUERY\",\"paramsSchema\":\"{}\",\"failFast\":false}],\"addedLater\":true}";
+    try (MockServer server = new MockServer().respond(200, revision)) {
+      PromptRevision prompt = server.client().getPrompt("greeting", "production");
+      assertEquals(Model.UNKNOWN_DEFAULT_OPEN_API, prompt.getModel());
+      assertInstanceOf(TextFormat.class, prompt.getResponseFormat().getActualInstance());
+      HttpCall tool =
+          assertInstanceOf(HttpCall.class, prompt.getTools().get(0).getActualInstance());
+      assertEquals(HttpCall.MethodEnum.UNKNOWN_DEFAULT_OPEN_API, tool.getMethod());
+    }
+  }
+
+  @Test
+  void runRejectsUnknownPriorityBeforeSending() {
+    try (MockServer server = new MockServer().respond(200, RUN_RESPONSE)) {
+      RunOptions options = RunOptions.builder().priority("urgent").build();
+      assertThrows(IllegalArgumentException.class,
+          () -> server.client().runPrompt("greeting", "production", Map.of(), options));
+      assertThrows(IllegalArgumentException.class,
+          () -> server.client().runWorkflow("onboarding", "production", Map.of(), options));
+      assertTrue(server.calls.isEmpty());
     }
   }
 

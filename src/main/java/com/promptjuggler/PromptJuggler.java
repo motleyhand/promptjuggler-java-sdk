@@ -101,7 +101,13 @@ public final class PromptJuggler {
       RunOptions options) throws PromptJugglerException {
     CreatePromptRun body = new CreatePromptRun().inputs(inputs);
     if (options.priority != null) {
-      body.priority(CreatePromptRun.PriorityEnum.fromValue(options.priority));
+      // fromValue maps a value it doesn't list to UNKNOWN_DEFAULT_OPEN_API instead of throwing.
+      CreatePromptRun.PriorityEnum priority =
+          CreatePromptRun.PriorityEnum.fromValue(options.priority);
+      if (priority == CreatePromptRun.PriorityEnum.UNKNOWN_DEFAULT_OPEN_API) {
+        throw new IllegalArgumentException("Unexpected priority '" + options.priority + "'");
+      }
+      body.priority(priority);
     }
     if (options.thread != null) {
       body.thread(options.thread);
@@ -153,7 +159,12 @@ public final class PromptJuggler {
       Map<String, String> inputs, RunOptions options) throws PromptJugglerException {
     CreateWorkflowRun body = new CreateWorkflowRun().inputs(inputs);
     if (options.priority != null) {
-      body.priority(CreateWorkflowRun.PriorityEnum.fromValue(options.priority));
+      CreateWorkflowRun.PriorityEnum priority =
+          CreateWorkflowRun.PriorityEnum.fromValue(options.priority);
+      if (priority == CreateWorkflowRun.PriorityEnum.UNKNOWN_DEFAULT_OPEN_API) {
+        throw new IllegalArgumentException("Unexpected priority '" + options.priority + "'");
+      }
+      body.priority(priority);
     }
     if (options.thread != null) {
       body.thread(options.thread);

@@ -65,7 +65,9 @@ public class WorkflowCall {
    * Gets or Sets type
    */
   public enum TypeEnum {
-    WORKFLOW(String.valueOf("workflow"));
+    WORKFLOW(String.valueOf("workflow")),
+    
+    UNKNOWN_DEFAULT_OPEN_API(String.valueOf("unknown_default_open_api"));
 
     private String value;
 
@@ -90,7 +92,7 @@ public class WorkflowCall {
           return b;
         }
       }
-      throw new IllegalArgumentException("Unexpected value '" + value + "'");
+      return UNKNOWN_DEFAULT_OPEN_API;
     }
   }
 

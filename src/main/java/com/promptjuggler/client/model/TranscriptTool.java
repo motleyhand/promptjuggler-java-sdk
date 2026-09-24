@@ -65,7 +65,9 @@ public class TranscriptTool {
    * Gets or Sets type
    */
   public enum TypeEnum {
-    TOOL(String.valueOf("tool"));
+    TOOL(String.valueOf("tool")),
+    
+    UNKNOWN_DEFAULT_OPEN_API(String.valueOf("unknown_default_open_api"));
 
     private String value;
 
@@ -90,7 +92,7 @@ public class TranscriptTool {
           return b;
         }
       }
-      throw new IllegalArgumentException("Unexpected value '" + value + "'");
+      return UNKNOWN_DEFAULT_OPEN_API;
     }
   }
 

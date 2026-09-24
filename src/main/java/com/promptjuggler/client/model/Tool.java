@@ -102,6 +102,46 @@ public class Tool extends AbstractOpenApiSchema {
         public Tool deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException, JsonProcessingException {
             JsonNode tree = ctxt.readTree(jp);
             Object deserialized = null;
+            Tool newTool = new Tool();
+            Map<String,Object> result2 = tree.traverse(jp.getCodec()).readValueAs(new TypeReference<Map<String, Object>>() {});
+            String discriminatorValue = (String)result2.get("type");
+            switch (discriminatorValue) {
+                case "emit":
+                    deserialized = tree.traverse(jp.getCodec()).readValueAs(Emit.class);
+                    newTool.setActualInstance(deserialized);
+                    return newTool;
+                case "http":
+                    deserialized = tree.traverse(jp.getCodec()).readValueAs(HttpCall.class);
+                    newTool.setActualInstance(deserialized);
+                    return newTool;
+                case "knowledge_search":
+                    deserialized = tree.traverse(jp.getCodec()).readValueAs(KnowledgeSearch.class);
+                    newTool.setActualInstance(deserialized);
+                    return newTool;
+                case "mcp":
+                    deserialized = tree.traverse(jp.getCodec()).readValueAs(Mcp.class);
+                    newTool.setActualInstance(deserialized);
+                    return newTool;
+                case "prompt":
+                    deserialized = tree.traverse(jp.getCodec()).readValueAs(PromptCall.class);
+                    newTool.setActualInstance(deserialized);
+                    return newTool;
+                case "script":
+                    deserialized = tree.traverse(jp.getCodec()).readValueAs(ScriptCall.class);
+                    newTool.setActualInstance(deserialized);
+                    return newTool;
+                case "web_search":
+                    deserialized = tree.traverse(jp.getCodec()).readValueAs(WebSearch.class);
+                    newTool.setActualInstance(deserialized);
+                    return newTool;
+                case "workflow":
+                    deserialized = tree.traverse(jp.getCodec()).readValueAs(WorkflowCall.class);
+                    newTool.setActualInstance(deserialized);
+                    return newTool;
+                default:
+                    log.log(Level.WARNING, String.format(java.util.Locale.ROOT, "Failed to lookup discriminator value `%s` for Tool. Possible values: emit http knowledge_search mcp prompt script web_search workflow", discriminatorValue));
+            }
+
             boolean typeCoercion = ctxt.isEnabled(MapperFeature.ALLOW_COERCION_OF_SCALARS);
             int match = 0;
             JsonToken token = tree.traverse(jp.getCodec()).nextToken();

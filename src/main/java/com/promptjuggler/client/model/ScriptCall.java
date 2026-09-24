@@ -52,7 +52,9 @@ public class ScriptCall {
   public enum LanguageEnum {
     PYTHON(String.valueOf("python")),
     
-    JAVASCRIPT(String.valueOf("javascript"));
+    JAVASCRIPT(String.valueOf("javascript")),
+    
+    UNKNOWN_DEFAULT_OPEN_API(String.valueOf("unknown_default_open_api"));
 
     private String value;
 
@@ -77,7 +79,7 @@ public class ScriptCall {
           return b;
         }
       }
-      throw new IllegalArgumentException("Unexpected value '" + value + "'");
+      return UNKNOWN_DEFAULT_OPEN_API;
     }
   }
 
@@ -104,7 +106,9 @@ public class ScriptCall {
    * Gets or Sets type
    */
   public enum TypeEnum {
-    SCRIPT(String.valueOf("script"));
+    SCRIPT(String.valueOf("script")),
+    
+    UNKNOWN_DEFAULT_OPEN_API(String.valueOf("unknown_default_open_api"));
 
     private String value;
 
@@ -129,7 +133,7 @@ public class ScriptCall {
           return b;
         }
       }
-      throw new IllegalArgumentException("Unexpected value '" + value + "'");
+      return UNKNOWN_DEFAULT_OPEN_API;
     }
   }
 

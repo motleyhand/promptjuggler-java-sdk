@@ -51,7 +51,9 @@ public class WebSearch {
    * Gets or Sets type
    */
   public enum TypeEnum {
-    WEB_SEARCH(String.valueOf("web_search"));
+    WEB_SEARCH(String.valueOf("web_search")),
+    
+    UNKNOWN_DEFAULT_OPEN_API(String.valueOf("unknown_default_open_api"));
 
     private String value;
 
@@ -76,7 +78,7 @@ public class WebSearch {
           return b;
         }
       }
-      throw new IllegalArgumentException("Unexpected value '" + value + "'");
+      return UNKNOWN_DEFAULT_OPEN_API;
     }
   }
 

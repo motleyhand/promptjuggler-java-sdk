@@ -63,7 +63,9 @@ public class JsonSchemaFormat {
    * Gets or Sets type
    */
   public enum TypeEnum {
-    JSON_SCHEMA(String.valueOf("json_schema"));
+    JSON_SCHEMA(String.valueOf("json_schema")),
+    
+    UNKNOWN_DEFAULT_OPEN_API(String.valueOf("unknown_default_open_api"));
 
     private String value;
 
@@ -88,7 +90,7 @@ public class JsonSchemaFormat {
           return b;
         }
       }
-      throw new IllegalArgumentException("Unexpected value '" + value + "'");
+      return UNKNOWN_DEFAULT_OPEN_API;
     }
   }
 

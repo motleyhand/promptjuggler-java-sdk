@@ -64,7 +64,9 @@ public class Emit {
    * Gets or Sets type
    */
   public enum TypeEnum {
-    EMIT(String.valueOf("emit"));
+    EMIT(String.valueOf("emit")),
+    
+    UNKNOWN_DEFAULT_OPEN_API(String.valueOf("unknown_default_open_api"));
 
     private String value;
 
@@ -89,7 +91,7 @@ public class Emit {
           return b;
         }
       }
-      throw new IllegalArgumentException("Unexpected value '" + value + "'");
+      return UNKNOWN_DEFAULT_OPEN_API;
     }
   }
 

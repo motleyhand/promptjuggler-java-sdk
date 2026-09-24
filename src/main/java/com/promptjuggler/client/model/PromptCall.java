@@ -65,7 +65,9 @@ public class PromptCall {
    * Gets or Sets type
    */
   public enum TypeEnum {
-    PROMPT(String.valueOf("prompt"));
+    PROMPT(String.valueOf("prompt")),
+    
+    UNKNOWN_DEFAULT_OPEN_API(String.valueOf("unknown_default_open_api"));
 
     private String value;
 
@@ -90,7 +92,7 @@ public class PromptCall {
           return b;
         }
       }
-      throw new IllegalArgumentException("Unexpected value '" + value + "'");
+      return UNKNOWN_DEFAULT_OPEN_API;
     }
   }
 

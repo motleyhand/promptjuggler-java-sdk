@@ -41,7 +41,9 @@ public class JsonObjectFormat {
    * Gets or Sets type
    */
   public enum TypeEnum {
-    JSON_OBJECT(String.valueOf("json_object"));
+    JSON_OBJECT(String.valueOf("json_object")),
+    
+    UNKNOWN_DEFAULT_OPEN_API(String.valueOf("unknown_default_open_api"));
 
     private String value;
 
@@ -66,7 +68,7 @@ public class JsonObjectFormat {
           return b;
         }
       }
-      throw new IllegalArgumentException("Unexpected value '" + value + "'");
+      return UNKNOWN_DEFAULT_OPEN_API;
     }
   }
 

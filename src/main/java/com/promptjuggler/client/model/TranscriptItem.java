@@ -98,6 +98,26 @@ public class TranscriptItem extends AbstractOpenApiSchema {
         public TranscriptItem deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException, JsonProcessingException {
             JsonNode tree = ctxt.readTree(jp);
             Object deserialized = null;
+            TranscriptItem newTranscriptItem = new TranscriptItem();
+            Map<String,Object> result2 = tree.traverse(jp.getCodec()).readValueAs(new TypeReference<Map<String, Object>>() {});
+            String discriminatorValue = (String)result2.get("type");
+            switch (discriminatorValue) {
+                case "data":
+                    deserialized = tree.traverse(jp.getCodec()).readValueAs(TranscriptData.class);
+                    newTranscriptItem.setActualInstance(deserialized);
+                    return newTranscriptItem;
+                case "text":
+                    deserialized = tree.traverse(jp.getCodec()).readValueAs(TranscriptText.class);
+                    newTranscriptItem.setActualInstance(deserialized);
+                    return newTranscriptItem;
+                case "tool":
+                    deserialized = tree.traverse(jp.getCodec()).readValueAs(TranscriptTool.class);
+                    newTranscriptItem.setActualInstance(deserialized);
+                    return newTranscriptItem;
+                default:
+                    log.log(Level.WARNING, String.format(java.util.Locale.ROOT, "Failed to lookup discriminator value `%s` for TranscriptItem. Possible values: data text tool", discriminatorValue));
+            }
+
             boolean typeCoercion = ctxt.isEnabled(MapperFeature.ALLOW_COERCION_OF_SCALARS);
             int match = 0;
             JsonToken token = tree.traverse(jp.getCodec()).nextToken();

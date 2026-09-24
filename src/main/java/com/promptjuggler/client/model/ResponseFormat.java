@@ -92,6 +92,26 @@ public class ResponseFormat extends AbstractOpenApiSchema {
         public ResponseFormat deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException, JsonProcessingException {
             JsonNode tree = ctxt.readTree(jp);
             Object deserialized = null;
+            ResponseFormat newResponseFormat = new ResponseFormat();
+            Map<String,Object> result2 = tree.traverse(jp.getCodec()).readValueAs(new TypeReference<Map<String, Object>>() {});
+            String discriminatorValue = (String)result2.get("type");
+            switch (discriminatorValue) {
+                case "json_object":
+                    deserialized = tree.traverse(jp.getCodec()).readValueAs(JsonObjectFormat.class);
+                    newResponseFormat.setActualInstance(deserialized);
+                    return newResponseFormat;
+                case "json_schema":
+                    deserialized = tree.traverse(jp.getCodec()).readValueAs(JsonSchemaFormat.class);
+                    newResponseFormat.setActualInstance(deserialized);
+                    return newResponseFormat;
+                case "text":
+                    deserialized = tree.traverse(jp.getCodec()).readValueAs(TextFormat.class);
+                    newResponseFormat.setActualInstance(deserialized);
+                    return newResponseFormat;
+                default:
+                    log.log(Level.WARNING, String.format(java.util.Locale.ROOT, "Failed to lookup discriminator value `%s` for ResponseFormat. Possible values: json_object json_schema text", discriminatorValue));
+            }
+
             boolean typeCoercion = ctxt.isEnabled(MapperFeature.ALLOW_COERCION_OF_SCALARS);
             int match = 0;
             JsonToken token = tree.traverse(jp.getCodec()).nextToken();

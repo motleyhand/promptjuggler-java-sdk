@@ -64,7 +64,9 @@ public class CreateWorkflowRun {
     
     NORMAL(String.valueOf("normal")),
     
-    LOW(String.valueOf("low"));
+    LOW(String.valueOf("low")),
+    
+    UNKNOWN_DEFAULT_OPEN_API(String.valueOf("unknown_default_open_api"));
 
     private String value;
 
@@ -89,7 +91,7 @@ public class CreateWorkflowRun {
           return b;
         }
       }
-      throw new IllegalArgumentException("Unexpected value '" + value + "'");
+      return UNKNOWN_DEFAULT_OPEN_API;
     }
   }
 

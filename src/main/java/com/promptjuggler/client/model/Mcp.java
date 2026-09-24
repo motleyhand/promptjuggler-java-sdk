@@ -65,7 +65,9 @@ public class Mcp {
    * Gets or Sets type
    */
   public enum TypeEnum {
-    MCP(String.valueOf("mcp"));
+    MCP(String.valueOf("mcp")),
+    
+    UNKNOWN_DEFAULT_OPEN_API(String.valueOf("unknown_default_open_api"));
 
     private String value;
 
@@ -90,7 +92,7 @@ public class Mcp {
           return b;
         }
       }
-      throw new IllegalArgumentException("Unexpected value '" + value + "'");
+      return UNKNOWN_DEFAULT_OPEN_API;
     }
   }
 

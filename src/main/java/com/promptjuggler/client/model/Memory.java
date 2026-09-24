@@ -36,7 +36,9 @@ public enum Memory {
   
   READ_WRITE("read_write"),
   
-  WRITE_ONLY("write_only");
+  WRITE_ONLY("write_only"),
+  
+  UNKNOWN_DEFAULT_OPEN_API("unknown_default_open_api");
 
   private String value;
 
@@ -61,7 +63,7 @@ public enum Memory {
         return b;
       }
     }
-    throw new IllegalArgumentException("Unexpected value '" + value + "'");
+    return UNKNOWN_DEFAULT_OPEN_API;
   }
 
   /**

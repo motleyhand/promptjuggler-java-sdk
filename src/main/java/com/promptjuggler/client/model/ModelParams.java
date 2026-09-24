@@ -65,7 +65,9 @@ public class ModelParams {
     
     MEDIUM(String.valueOf("medium")),
     
-    HIGH(String.valueOf("high"));
+    HIGH(String.valueOf("high")),
+    
+    UNKNOWN_DEFAULT_OPEN_API(String.valueOf("unknown_default_open_api"));
 
     private String value;
 
@@ -111,7 +113,9 @@ public class ModelParams {
     
     XHIGH(String.valueOf("xhigh")),
     
-    MAX(String.valueOf("max"));
+    MAX(String.valueOf("max")),
+    
+    UNKNOWN_DEFAULT_OPEN_API(String.valueOf("unknown_default_open_api"));
 
     private String value;
 

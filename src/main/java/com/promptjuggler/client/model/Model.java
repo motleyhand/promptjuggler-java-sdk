@@ -106,7 +106,9 @@ public enum Model {
   
   CLAUDE_SONNET_4_5("claude-sonnet-4-5"),
   
-  CLAUDE_HAIKU_4_5("claude-haiku-4-5");
+  CLAUDE_HAIKU_4_5("claude-haiku-4-5"),
+  
+  UNKNOWN_DEFAULT_OPEN_API("unknown_default_open_api");
 
   private String value;
 
@@ -131,7 +133,7 @@ public enum Model {
         return b;
       }
     }
-    throw new IllegalArgumentException("Unexpected value '" + value + "'");
+    return UNKNOWN_DEFAULT_OPEN_API;
   }
 
   /**

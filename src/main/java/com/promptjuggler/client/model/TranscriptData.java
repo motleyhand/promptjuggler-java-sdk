@@ -53,7 +53,9 @@ public class TranscriptData {
    * Gets or Sets type
    */
   public enum TypeEnum {
-    DATA(String.valueOf("data"));
+    DATA(String.valueOf("data")),
+    
+    UNKNOWN_DEFAULT_OPEN_API(String.valueOf("unknown_default_open_api"));
 
     private String value;
 
@@ -78,7 +80,7 @@ public class TranscriptData {
           return b;
         }
       }
-      throw new IllegalArgumentException("Unexpected value '" + value + "'");
+      return UNKNOWN_DEFAULT_OPEN_API;
     }
   }
 

@@ -65,7 +65,9 @@ public class KnowledgeSearch {
    * Gets or Sets type
    */
   public enum TypeEnum {
-    KNOWLEDGE_SEARCH(String.valueOf("knowledge_search"));
+    KNOWLEDGE_SEARCH(String.valueOf("knowledge_search")),
+    
+    UNKNOWN_DEFAULT_OPEN_API(String.valueOf("unknown_default_open_api"));
 
     private String value;
 
@@ -90,7 +92,7 @@ public class KnowledgeSearch {
           return b;
         }
       }
-      throw new IllegalArgumentException("Unexpected value '" + value + "'");
+      return UNKNOWN_DEFAULT_OPEN_API;
     }
   }
 

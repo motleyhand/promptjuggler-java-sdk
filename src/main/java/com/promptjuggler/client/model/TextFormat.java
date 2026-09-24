@@ -41,7 +41,9 @@ public class TextFormat {
    * Gets or Sets type
    */
   public enum TypeEnum {
-    TEXT(String.valueOf("text"));
+    TEXT(String.valueOf("text")),
+    
+    UNKNOWN_DEFAULT_OPEN_API(String.valueOf("unknown_default_open_api"));
 
     private String value;
 
@@ -66,7 +68,7 @@ public class TextFormat {
           return b;
         }
       }
-      throw new IllegalArgumentException("Unexpected value '" + value + "'");
+      return UNKNOWN_DEFAULT_OPEN_API;
     }
   }
 
