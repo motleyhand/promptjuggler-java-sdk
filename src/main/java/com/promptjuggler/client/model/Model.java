@@ -32,6 +32,10 @@ public enum Model {
   
   GPT_6_ASTRA("gpt-6-astra"),
   
+  GPT_6_SOL("gpt-6-sol"),
+  
+  GPT_6_LUNA("gpt-6-luna"),
+  
   GPT_5_6_SOL("gpt-5.6-sol"),
   
   GPT_5_6_TERRA("gpt-5.6-terra"),
@@ -89,6 +93,8 @@ public enum Model {
   CLAUDE_FABLE_5_1("claude-fable-5-1"),
   
   CLAUDE_FABLE_5("claude-fable-5"),
+  
+  CLAUDE_OPUS_5_5("claude-opus-5-5"),
   
   CLAUDE_OPUS_5("claude-opus-5"),
   
