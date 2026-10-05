@@ -30,6 +30,8 @@ import com.fasterxml.jackson.annotation.JsonValue;
  */
 public enum Model {
   
+  GPT_6_1_SOL("gpt-6.1-sol"),
+  
   GPT_6_ASTRA("gpt-6-astra"),
   
   GPT_6_SOL("gpt-6-sol"),
@@ -106,11 +108,11 @@ public enum Model {
   
   CLAUDE_OPUS_4_5("claude-opus-4-5"),
   
+  CLAUDE_SONNET_5_5("claude-sonnet-5-5"),
+  
   CLAUDE_SONNET_5("claude-sonnet-5"),
   
   CLAUDE_SONNET_4_6("claude-sonnet-4-6"),
-  
-  CLAUDE_SONNET_4_5("claude-sonnet-4-5"),
   
   CLAUDE_HAIKU_4_5("claude-haiku-4-5"),
   
