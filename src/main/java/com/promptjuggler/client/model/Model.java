@@ -114,6 +114,8 @@ public enum Model {
   
   CLAUDE_SONNET_4_6("claude-sonnet-4-6"),
   
+  CLAUDE_HAIKU_5_5("claude-haiku-5-5"),
+  
   CLAUDE_HAIKU_4_5("claude-haiku-4-5"),
   
   UNKNOWN_DEFAULT_OPEN_API("unknown_default_open_api");
