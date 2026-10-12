@@ -26,7 +26,6 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.promptjuggler.client.model.ContentMessageResponse;
 import com.promptjuggler.client.model.Memory;
-import com.promptjuggler.client.model.Model;
 import com.promptjuggler.client.model.ModelParams;
 import com.promptjuggler.client.model.Provider;
 import com.promptjuggler.client.model.ResponseFormat;
@@ -78,7 +77,7 @@ public class PromptRevision {
 
   public static final String JSON_PROPERTY_MODEL = "model";
   @jakarta.annotation.Nonnull
-  private Model model;
+  private String model;
 
   public static final String JSON_PROPERTY_MODEL_PARAMS = "modelParams";
   @jakarta.annotation.Nonnull
@@ -198,7 +197,7 @@ public class PromptRevision {
   }
 
 
-  public PromptRevision model(@jakarta.annotation.Nonnull Model model) {
+  public PromptRevision model(@jakarta.annotation.Nonnull String model) {
     this.model = model;
     return this;
   }
@@ -210,14 +209,14 @@ public class PromptRevision {
   @jakarta.annotation.Nonnull
   @JsonProperty(value = JSON_PROPERTY_MODEL, required = true)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public Model getModel() {
+  public String getModel() {
     return model;
   }
 
 
   @JsonProperty(value = JSON_PROPERTY_MODEL, required = true)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public void setModel(@jakarta.annotation.Nonnull Model model) {
+  public void setModel(@jakarta.annotation.Nonnull String model) {
     this.model = model;
   }
 
