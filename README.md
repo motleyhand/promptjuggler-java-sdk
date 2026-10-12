@@ -10,10 +10,12 @@ flat, synchronous methods, over the JDK's built-in HTTP client (no third-party H
 
 ## Installation
 
+Replace `VERSION` with the latest release: [![Maven Central](https://img.shields.io/maven-central/v/com.promptjuggler/promptjuggler-java)](https://central.sonatype.com/artifact/com.promptjuggler/promptjuggler-java)
+
 Gradle:
 
 ```kotlin
-implementation("com.promptjuggler:promptjuggler-java:1.0.0")
+implementation("com.promptjuggler:promptjuggler-java:VERSION")
 ```
 
 Maven:
@@ -22,11 +24,9 @@ Maven:
 <dependency>
   <groupId>com.promptjuggler</groupId>
   <artifactId>promptjuggler-java</artifactId>
-  <version>1.0.0</version>
+  <version>VERSION</version>
 </dependency>
 ```
-
-Use the latest version from [Maven Central](https://central.sonatype.com/artifact/com.promptjuggler/promptjuggler-java).
 
 ## Usage
 
