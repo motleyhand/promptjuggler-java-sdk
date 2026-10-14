@@ -66,7 +66,7 @@ public class TokenUsage {
 
   public static final String JSON_PROPERTY_SERVICE_TIER = "serviceTier";
   @jakarta.annotation.Nullable
-  private ServiceTier serviceTier;
+  private ServiceTier serviceTier = ServiceTier.DEFAULT;
 
   public static final String JSON_PROPERTY_INPUT_CACHE_WRITE = "inputCacheWrite";
   @jakarta.annotation.Nullable
