@@ -203,7 +203,8 @@ public final class PromptJuggler {
    * carries the fully-resolved SSE URL alongside the token, so clients need no host configuration.
    *
    * <p>
-   * Connect before triggering a run: tokens emitted while nobody is subscribed are not replayed.
+   * A fresh connection starts at the live tip, so connect before triggering a run, or set the
+   * browser SDK's {@code replay} option to join a run already under way.
    */
   public StreamTokenResponse createStreamToken(UUID thread) throws PromptJugglerException {
     return send(() -> streaming.createStreamToken(thread));
