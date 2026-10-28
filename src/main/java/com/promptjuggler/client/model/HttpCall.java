@@ -193,7 +193,7 @@ public class HttpCall {
   }
 
   /**
-   * The URL to call. Can contain ${ENV_VAR} and {{inputName}} placeholders.
+   * The URL to call. Can contain ${ENV_VAR} and {{inputName}} placeholders; a password or a credential query parameter (api_key, token, …) must take its secret from one.
    * @return url
    */
   @jakarta.annotation.Nonnull
