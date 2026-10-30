@@ -231,7 +231,7 @@ public class ModelParams {
   /**
    * Top P.
    * minimum: 0
-   * maximum: 2
+   * maximum: 1
    * @return topP
    */
   @jakarta.annotation.Nullable
