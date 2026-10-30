@@ -279,7 +279,7 @@ public class CreateWorkflowRun {
   }
 
   /**
-   * Arbitrary key-value metadata attached to the run. Values can be strings or arrays of strings.
+   * Arbitrary key-value metadata attached to the run. Values can be strings or arrays of strings. Each key can be up to 255 bytes, each value up to 1,024 bytes.
    * @return metadata
    */
   @jakarta.annotation.Nullable
