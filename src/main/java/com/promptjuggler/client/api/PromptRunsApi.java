@@ -176,7 +176,7 @@ public class PromptRunsApi {
    * Create and trigger a prompt run
    * Triggers an asynchronous prompt run with the given inputs and returns a run ID and thread ID. Reference the prompt by version number, tag, or &#x60;__latest__&#x60;. Pass a thread ID to continue an existing conversation.
    * @param slug Prompt Handle (required)
-   * @param version Specific version or tag or id (required)
+   * @param version A version number such as &#x60;3&#x60; or &#x60;v3&#x60;, a tag, or &#x60;latest&#x60; for the newest published version. (required)
    * @param createPromptRun  (required)
    * @return CreatePromptRunResponse
    * @throws ApiException if fails to make API call
@@ -189,7 +189,7 @@ public class PromptRunsApi {
    * Create and trigger a prompt run
    * Triggers an asynchronous prompt run with the given inputs and returns a run ID and thread ID. Reference the prompt by version number, tag, or &#x60;__latest__&#x60;. Pass a thread ID to continue an existing conversation.
    * @param slug Prompt Handle (required)
-   * @param version Specific version or tag or id (required)
+   * @param version A version number such as &#x60;3&#x60; or &#x60;v3&#x60;, a tag, or &#x60;latest&#x60; for the newest published version. (required)
    * @param createPromptRun  (required)
    * @param headers Optional headers to include in the request
    * @return CreatePromptRunResponse
@@ -204,7 +204,7 @@ public class PromptRunsApi {
    * Create and trigger a prompt run
    * Triggers an asynchronous prompt run with the given inputs and returns a run ID and thread ID. Reference the prompt by version number, tag, or &#x60;__latest__&#x60;. Pass a thread ID to continue an existing conversation.
    * @param slug Prompt Handle (required)
-   * @param version Specific version or tag or id (required)
+   * @param version A version number such as &#x60;3&#x60; or &#x60;v3&#x60;, a tag, or &#x60;latest&#x60; for the newest published version. (required)
    * @param createPromptRun  (required)
    * @return ApiResponse&lt;CreatePromptRunResponse&gt;
    * @throws ApiException if fails to make API call
@@ -217,7 +217,7 @@ public class PromptRunsApi {
    * Create and trigger a prompt run
    * Triggers an asynchronous prompt run with the given inputs and returns a run ID and thread ID. Reference the prompt by version number, tag, or &#x60;__latest__&#x60;. Pass a thread ID to continue an existing conversation.
    * @param slug Prompt Handle (required)
-   * @param version Specific version or tag or id (required)
+   * @param version A version number such as &#x60;3&#x60; or &#x60;v3&#x60;, a tag, or &#x60;latest&#x60; for the newest published version. (required)
    * @param createPromptRun  (required)
    * @param headers Optional headers to include in the request
    * @return ApiResponse&lt;CreatePromptRunResponse&gt;

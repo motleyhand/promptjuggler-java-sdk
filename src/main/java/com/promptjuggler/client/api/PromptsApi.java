@@ -172,7 +172,7 @@ public class PromptsApi {
    * Get a prompt revision by the prompt’s slug and version
    * Retrieves the full configuration of a prompt revision including model, parameters, tool calls, messages.
    * @param slug Prompt Handle (required)
-   * @param version Specific version or tag or id (required)
+   * @param version A version number such as &#x60;3&#x60; or &#x60;v3&#x60;, a tag, or &#x60;latest&#x60; for the newest published version. (required)
    * @return PromptRevision
    * @throws ApiException if fails to make API call
    */
@@ -184,7 +184,7 @@ public class PromptsApi {
    * Get a prompt revision by the prompt’s slug and version
    * Retrieves the full configuration of a prompt revision including model, parameters, tool calls, messages.
    * @param slug Prompt Handle (required)
-   * @param version Specific version or tag or id (required)
+   * @param version A version number such as &#x60;3&#x60; or &#x60;v3&#x60;, a tag, or &#x60;latest&#x60; for the newest published version. (required)
    * @param headers Optional headers to include in the request
    * @return PromptRevision
    * @throws ApiException if fails to make API call
@@ -198,7 +198,7 @@ public class PromptsApi {
    * Get a prompt revision by the prompt’s slug and version
    * Retrieves the full configuration of a prompt revision including model, parameters, tool calls, messages.
    * @param slug Prompt Handle (required)
-   * @param version Specific version or tag or id (required)
+   * @param version A version number such as &#x60;3&#x60; or &#x60;v3&#x60;, a tag, or &#x60;latest&#x60; for the newest published version. (required)
    * @return ApiResponse&lt;PromptRevision&gt;
    * @throws ApiException if fails to make API call
    */
@@ -210,7 +210,7 @@ public class PromptsApi {
    * Get a prompt revision by the prompt’s slug and version
    * Retrieves the full configuration of a prompt revision including model, parameters, tool calls, messages.
    * @param slug Prompt Handle (required)
-   * @param version Specific version or tag or id (required)
+   * @param version A version number such as &#x60;3&#x60; or &#x60;v3&#x60;, a tag, or &#x60;latest&#x60; for the newest published version. (required)
    * @param headers Optional headers to include in the request
    * @return ApiResponse&lt;PromptRevision&gt;
    * @throws ApiException if fails to make API call

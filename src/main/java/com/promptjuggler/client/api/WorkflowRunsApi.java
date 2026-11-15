@@ -176,7 +176,7 @@ public class WorkflowRunsApi {
    * Create and trigger a workflow run
    * Triggers an asynchronous workflow run with the given inputs and returns a run ID and thread ID. Reference the workflow by version number, tag, or &#x60;__latest__&#x60;. Pass a thread ID to continue an existing conversation across runs.
    * @param slug Workflow Handle (required)
-   * @param version Specific version or tag or id (required)
+   * @param version A version number such as &#x60;3&#x60; or &#x60;v3&#x60;, a tag, or &#x60;latest&#x60; for the newest published version. (required)
    * @param createWorkflowRun  (required)
    * @return CreateWorkflowRunResponse
    * @throws ApiException if fails to make API call
@@ -189,7 +189,7 @@ public class WorkflowRunsApi {
    * Create and trigger a workflow run
    * Triggers an asynchronous workflow run with the given inputs and returns a run ID and thread ID. Reference the workflow by version number, tag, or &#x60;__latest__&#x60;. Pass a thread ID to continue an existing conversation across runs.
    * @param slug Workflow Handle (required)
-   * @param version Specific version or tag or id (required)
+   * @param version A version number such as &#x60;3&#x60; or &#x60;v3&#x60;, a tag, or &#x60;latest&#x60; for the newest published version. (required)
    * @param createWorkflowRun  (required)
    * @param headers Optional headers to include in the request
    * @return CreateWorkflowRunResponse
@@ -204,7 +204,7 @@ public class WorkflowRunsApi {
    * Create and trigger a workflow run
    * Triggers an asynchronous workflow run with the given inputs and returns a run ID and thread ID. Reference the workflow by version number, tag, or &#x60;__latest__&#x60;. Pass a thread ID to continue an existing conversation across runs.
    * @param slug Workflow Handle (required)
-   * @param version Specific version or tag or id (required)
+   * @param version A version number such as &#x60;3&#x60; or &#x60;v3&#x60;, a tag, or &#x60;latest&#x60; for the newest published version. (required)
    * @param createWorkflowRun  (required)
    * @return ApiResponse&lt;CreateWorkflowRunResponse&gt;
    * @throws ApiException if fails to make API call
@@ -217,7 +217,7 @@ public class WorkflowRunsApi {
    * Create and trigger a workflow run
    * Triggers an asynchronous workflow run with the given inputs and returns a run ID and thread ID. Reference the workflow by version number, tag, or &#x60;__latest__&#x60;. Pass a thread ID to continue an existing conversation across runs.
    * @param slug Workflow Handle (required)
-   * @param version Specific version or tag or id (required)
+   * @param version A version number such as &#x60;3&#x60; or &#x60;v3&#x60;, a tag, or &#x60;latest&#x60; for the newest published version. (required)
    * @param createWorkflowRun  (required)
    * @param headers Optional headers to include in the request
    * @return ApiResponse&lt;CreateWorkflowRunResponse&gt;
