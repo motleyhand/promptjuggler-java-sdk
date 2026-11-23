@@ -36,7 +36,9 @@ public enum ServiceTier {
   
   FLEX("flex"),
   
-  PRIORITY("priority"),
+  FAST("fast"),
+  
+  ULTRAFAST("ultrafast"),
   
   UNKNOWN_DEFAULT_OPEN_API("unknown_default_open_api");
 
